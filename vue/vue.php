@@ -26,9 +26,8 @@ class Vue
     ?>
     <h1>Solitaire</h1>
     <h2><?php echo $_SESSION["pseudo"]; ?></h2>
-    <p>Plateau</p>
+    <h3>Plateau</h3>
     <?php
-    //TODO
   }
 
     /*function afficheMessages($messages)
