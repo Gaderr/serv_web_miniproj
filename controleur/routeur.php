@@ -14,9 +14,7 @@ class Routeur
   // Traite une requête entrante
   public function routerRequete()
   {
-    $prompt = false;
-
-    if(!isset($_COOKIE['pseudo_auth'])) //Le cookie est inexistant
+    if($_SESSION["auth"] == false)) //Le cookie est inexistant
     {
       if(isset($_POST['pseudo']) && isset($_POST['passw'])) //Le formulaire a été envoyé;
       {
@@ -24,7 +22,7 @@ class Routeur
         $mdp = $_POST['passw'];
         if($this->ctrlAuthentification->checkAuth($pseudo, $mdp)) //vérif login
         {
-          $this->ctrlAuthentification->salon(); //Afficher le salon
+          $this->ctrlAuthentification->salon(); //TODO Afficher le plateau
           $prompt = true;
         }
         else //Erreur
@@ -39,17 +37,10 @@ class Routeur
     }
     else //Le cookie existe
     {
-      $this->ctrlAuthentification->salon(); //Afficher le salon
-      $prompt = true;
-    }
-
-    if($prompt)
-    {
-      if((isset($_POST['message'])) && (!$_POST['message'] == ''))
-      {
-          $this->ctrlAuthentification->prompt($_POST['message']);
-      }
+      $this->ctrlAuthentification->(); //TODO Afficher le plateau
     }
   }
+
+  //TODO Traitement des actions sur le plateau
 }
 ?>

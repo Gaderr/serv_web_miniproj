@@ -15,14 +15,7 @@ class ControleurAuthentification
 
   function accueil()
   {
-    $this->vue->demandeLogin();
-  }
-
-  function salon()
-  {
-    $messages = $this->modele->get10RecentMessage();
-
-    $this->vue->afficheMessages($messages);
+    $this->vue->vueLogin();
   }
 
   function checkAuth($pseudo, $passw)
@@ -30,17 +23,13 @@ class ControleurAuthentification
     if($this->modele->checkAuth($pseudo, $passw))
     {
       $_SESSION["auth"] = true;
+      $_SESSION["pseudo"] = $pseudo;
       return true;
     }
     else
     {
       return false;
     }
-  }
-
-  function prompt($m)
-  {
-    $this->modele->majSalon($_COOKIE['pseudo_auth'], $m);
   }
 }
 ?>
