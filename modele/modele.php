@@ -16,9 +16,9 @@ class Modele
     //  - 'o' = Bille présente & case jouable
     //  - 'u' = Bille absente & case jouable
     //On commence par définir toutes les cases non jouables
-    for ($ligne=0; $ligne<$nblignes; $ligne++)
+    for ($ligne = 0; $ligne < 6; $ligne++)
     {
-      for ($colonne=0; $colonne<$nbcolonnes; $colonne++)
+      for ($colonne = 0; $colonne < 6; $colonne++)
       {
         $plateau[$ligne][$colonne] = 'x'; //une case non jouable
       }
@@ -69,8 +69,10 @@ class Modele
   }
 
   //Sélection de la première bille à supprimer pour commencer à jouer
-  public function startGame(x, y)
+  public function startGame($positions)
   {
+    $x = $positions[0];
+    $y = $positions[1];
     $plateau = $_SESSION["plateau"];
     if($this->plateau[x][y] != 'x' && $this->plateau[x][y] == 'o')
     {
@@ -98,8 +100,10 @@ class Modele
     }
   }
 
-  public function moveUp(x, y)
+  public function moveUp($positions)
   {
+    $x = $positions[0];
+    $y = $positions[1];
     if($this->plateau[x][y - 1] == 'o' && $this->plateau[x][y - 2] == 'u')
     {
       $this->plateau[x][y - 1] == 'u'; //bille supprimée
@@ -113,8 +117,10 @@ class Modele
     }
   }
 
-  public function moveDown(x, y)
+  public function moveDown($positions)
   {
+    $x = $positions[0];
+    $y = $positions[1];
     if($this->plateau[x][y + 1] == 'o' && $this->plateau[x][y - 2] == 'u')
     {
       $this->plateau[x][y + 1] == 'u'; //bille supprimée
@@ -128,8 +134,10 @@ class Modele
     }
   }
 
-  public function moveLeft(x, y)
+  public function moveLeft($positions)
   {
+    $x = $positions[0];
+    $y = $positions[1];
     if($this->plateau[x - 1][y] == 'o' && $this->plateau[x][y - 2] == 'u')
     {
       $this->plateau[x - 1][y] == 'u'; //bille supprimée
@@ -143,8 +151,10 @@ class Modele
     }
   }
 
-  public function moveRight(x, y)
+  public function moveRight($positions)
   {
+    $x = $positions[0];
+    $y = $positions[1];
     if($this->plateau[x + 1][y] == 'o' && $this->plateau[x][y - 2] == 'u')
     {
       $this->plateau[x + 1][y] == 'u'; //bille supprimée

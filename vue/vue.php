@@ -10,14 +10,14 @@ class Vue
     ?>
     <html>
     <body>
-      <h1>Solitaire</h1>
-      <form method="post" action="index.php">
-      Entrer votre pseudo  <input type="text" name="pseudo"/>
-      </br>
-      Entrer votre mot de passe  <input type="text" name="passw"/>
-      </br>
-      <input type="submit" name="soumettre" value="envoyer"/>
-      </form>
+    <h1>Solitaire</h1>
+    <form method="post" action="index.php">
+    Entrer votre pseudo  <input type="text" name="pseudo"/>
+    </br>
+    Entrer votre mot de passe  <input type="text" name="passw"/>
+    </br>
+    <input type="submit" name="soumettre" value="envoyer"/>
+    </form>
     <?php
   }
 
@@ -28,6 +28,19 @@ class Vue
     <h2><?php echo $_SESSION["pseudo"]; ?></h2>
     <h3>Plateau</h3>
     <?php
+    $plt = $_SESSION["plateau"];
+    echo '<table border="1">';
+    //echo '<tr><th>Movies</th><th>Genre</th><th>Director</th></tr>';
+    foreach( $plt as $val )
+    {
+      echo '<tr>';
+      foreach( $val as $key )
+      {
+        echo '<td>'.$key.'</td>';
+      }
+      echo '</tr>';
+    }
+    echo '</table>';
   }
 
     /*function afficheMessages($messages)

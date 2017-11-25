@@ -18,6 +18,11 @@ class ControleurAuthentification
     $this->vue->vueLogin();
   }
 
+  function affPlateau()
+  {
+    $this->vue->vuePlateau();
+  }
+
   function checkAuth($pseudo, $passw)
   {
     if($this->modele->checkAuth($pseudo, $passw))

@@ -14,7 +14,7 @@ class Routeur
   // Traite une requête entrante
   public function routerRequete()
   {
-    if($_SESSION["auth"] == false)) //Le cookie est inexistant
+    if($_SESSION["auth"] == false) //Le cookie est inexistant
     {
       if(isset($_POST['pseudo']) && isset($_POST['passw'])) //Le formulaire a été envoyé;
       {
@@ -37,7 +37,7 @@ class Routeur
     }
     else //Le cookie existe
     {
-      $this->ctrlAuthentification->(); //TODO Afficher le plateau
+      $this->ctrlAuthentification->affPlateau(); //TODO Afficher le plateau
     }
   }
 
