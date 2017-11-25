@@ -16,9 +16,9 @@ class Modele
     //  - 'o' = Bille présente & case jouable
     //  - 'u' = Bille absente & case jouable
     //On commence par définir toutes les cases non jouables
-    for ($ligne = 0; $ligne < 6; $ligne++)
+    for ($ligne = 0; $ligne < 7; $ligne++)
     {
-      for ($colonne = 0; $colonne < 6; $colonne++)
+      for ($colonne = 0; $colonne < 7; $colonne++)
       {
         $plateau[$ligne][$colonne] = 'x'; //une case non jouable
       }
@@ -26,18 +26,18 @@ class Modele
 
     //Définition des emplacements
     //On définit les cases jouables par dessus les non-jouables
-    for($l = 2; $l < 4; $l++)//Les lignes 3, 4, 5 sont jouables
+    for($ligne = 2; $ligne < 5; $ligne++)//Les lignes 3, 4, 5 sont jouables
     {
-      for($c = 0; $c < 6; $c++)
+      for($colonne = 0; $colonne < 7; $colonne++)
       {
-        $plateau[$l][$c] = 'o'; //o = un emplacement
+        $plateau[$ligne][$colonne] = 'o'; //o = un emplacement
       }
     }
-    for($c = 2; $c < 4; $c++)//Les colonnes 3, 4, 5 sont jouables
+    for($colonne = 2; $colonne < 5; $colonne++)//Les colonnes 3, 4, 5 sont jouables
     {
-      for($l = 0; $l < 6; $c++)
+      for($ligne = 0; $ligne < 7; $ligne++)
       {
-        $plateau[$l][$c] = 'o';
+        $plateau[$ligne][$colonne] = 'o';
       }
     }
 
@@ -84,18 +84,18 @@ class Modele
   //relancer une partie / reinitialiser le plateau
   public function reInit()
   {
-    for($l = 2; $l < 4; $l++)
+    for($ligne = 2; $ligne < 5; $ligne++)
     {
-      for($c = 0; $c < 6; $c++)
+      for($colonne = 0; $colonne < 7; $colonne++)
       {
-        $plateau[$l][$c] = 'o';
+        $plateau[$ligne][$colonne] = 'o';
       }
     }
-    for($c = 2; $c < 4; $c++)
+    for($colonne = 2; $colonne < 5; $colonne++)
     {
-      for($l = 0; $l < 6; $c++)
+      for($ligne = 0; $ligne < 7; $ligne++)
       {
-        $plateau[$l][$c] = 'o';
+        $plateau[$ligne][$colonne] = 'o';
       }
     }
   }

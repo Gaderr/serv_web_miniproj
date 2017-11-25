@@ -25,7 +25,18 @@ class Vue
   {
     ?>
     <h1>Solitaire</h1>
-    <h2><?php echo $_SESSION["pseudo"]; ?></h2>
+    <h2>
+      <?php
+      if(isset($_SESSION["pseudo"]))
+      {
+        echo $_SESSION["pseudo"];
+      }
+      else
+      {
+        echo "Pas d'utilisateur connecté / Site en mode tests";
+      }
+      ?>
+    </h2>
     <h3>Plateau</h3>
     <?php
     $plt = $_SESSION["plateau"];
