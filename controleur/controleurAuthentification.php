@@ -23,6 +23,11 @@ class ControleurAuthentification
     $this->vue->vuePlateau();
   }
 
+  function start()
+  {
+    $this->modele->startGame();
+  }
+
   function checkAuth($pseudo, $passw)
   {
     if($this->modele->checkAuth($pseudo, $passw))

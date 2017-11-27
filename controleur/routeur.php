@@ -39,9 +39,14 @@ class Routeur
     {
       $this->ctrlAuthentification->affPlateau(); //TODO Afficher le plateau
     }*/
-    $this->ctrlAuthentification->affPlateau();
-  }
 
+    $this->ctrlAuthentification->affPlateau();
+
+    if(isset($_POST['case']))
+    {
+      $this->ctrlAuthentification->start();
+    }
+  }
   //TODO Traitement des actions sur le plateau
 }
 ?>

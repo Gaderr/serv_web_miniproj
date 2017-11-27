@@ -1,5 +1,5 @@
 <?php
-// gabriel bg
+
 // les chemins vers les différents répertoires liés au modèle MVC
 
 // chemin complet sur le serveur de la racine du site, il est supposé que config.php est dans un sous-repertoire de la racine du site
