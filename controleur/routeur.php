@@ -9,6 +9,7 @@ class Routeur
   public function __construct()
   {
     $this->ctrlAuthentification= new ControleurAuthentification();
+    $_SESSION['chxdep'] = false;
   }
 
   // Traite une requête entrante
@@ -40,11 +41,23 @@ class Routeur
       $this->ctrlAuthentification->affPlateau(); //TODO Afficher le plateau
     }*/
 
-    $this->ctrlAuthentification->affPlateau();
-
-    if(isset($_POST['case']))
+    if($_SESSION['chxdep'] == false)
     {
-      $this->ctrlAuthentification->start();
+      //$this->ctrlAuthentification->affPlateau();
+      if(!isset($_POST['case']))
+      {
+        $this->ctrlAuthentification->affPlateau();
+        $this->ctrlAuthentification->affStartPlateau();
+        $this->ctrlAuthentification->askStartPlateau();
+      }
+      else
+      {
+        $this->ctrlAuthentification->affPlateau();
+      }
+    }
+    else
+    {
+      //$this->ctrlAuthentification->affPlateau();
     }
   }
   //TODO Traitement des actions sur le plateau

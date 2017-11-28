@@ -23,7 +23,12 @@ class ControleurAuthentification
     $this->vue->vuePlateau();
   }
 
-  function start()
+  function affStartPlateau()
+  {
+    $this->vue->start();
+  }
+
+  function askStartPlateau()
   {
     $this->modele->startGame();
   }

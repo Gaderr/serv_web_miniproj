@@ -41,54 +41,58 @@ class Vue
     <p>Le but du jeu est de retirer toutes les billes jusqu'à ce qu'il n'en reste plus qu'une.</p>
     <p>Pour "manger" une bille, sélectionnez en une pour manger celle qui se trouve à côté d'elle. Pas de diagonale possible !</p>
     <?php
-    $plt = $_SESSION["plateau"];
-
+    //$plt = $_SESSION["plateau"];
 
     echo '<form method="post" action="index.php"> <table border="1">';
     echo '<tr> <th></th>';
-    for($ix = 1; $ix < 8; $ix++)
+    for($ix = 0; $ix < 7; $ix++)
     {
       echo '<th>'.$ix.'</th>';
     }
     echo '</tr>';
 
-    $iy = 1;
+    $iy = 0;
     $ix = 0;
-    foreach( $plt as $val )
+    foreach( $_SESSION["plateau"] as $val )
     {
-      echo '<tr><td>'.$iy.'</td>';
+      echo '<tr><td><b>'.$iy.'</b></td>';
       foreach( $val as $key )
       {
         if ($key=="o")
         {
           $pos = $ix.$iy;
-          echo '<td> <input type="radio" name="case" id="choixcase" value="'.$pos.'"> </td>';
+          echo '<td> <input type="radio" name="case" id="choixcase" value="'.$pos.'">'.$key.'</td>';
         }
         else
         {
-          echo '<td> X </td>';
+          echo '<td> </td>';
         }
         $ix++;
+        if($ix == 7)
+        {
+          $ix = 0;
+        }
       }
       echo '</tr>';
       $iy++;
+      if($iy == 7)
+      {
+        $iy = 0;
+      }
     }
     echo '</table>';
+  }
 
-    //if(!isset($_SESSION['chxdep']))
-    //{
+  function start()
+  {
+    if($_SESSION['chxdep'] == false)
+    {
       ?>
       <p>Sélectionnez une bille à retirer pour commencer à jouer</p>
       <input type="submit" name="J'ai sélectionné ma bille de départ" value="envoyer"/>
       </form>
       <?php
-    //}
+    }
   }
-
-  /*function start()
-  {
-
-
-  }*/
 }
 ?>

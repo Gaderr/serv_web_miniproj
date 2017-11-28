@@ -42,7 +42,7 @@ class Modele
     }
 
     $_SESSION["plateau"] = $plateau; //TODO Utiliser une variable de session pour le plateau dans le reste des classes
-    $_SESSION['chxdep'] = false;
+    $_SESSION["chxdep"] = false;
 
     //résultat :
     //  +---------------> axe X
@@ -72,17 +72,15 @@ class Modele
   //Sélection de la première bille à supprimer pour commencer à jouer
   public function startGame()
   {
-    $x = $_POST['case'][0];
-    $y = $_POST['case'][1];
-    echo $x;
-    echo $y;
-    $plateau = $_SESSION["plateau"];
-    if($this->plateau[$x][$y] != 'x' && $this->plateau[$x][$y] == 'o')
-    {
-      $this->plateau[$x][$y] = 'u';
-    }
-    $_SESSION["plateau"] = $plateau;
-    $_SESSION['chxdep'] = true;
+    $posx = (int) $_POST['case'][0];
+    $posy = (int) $_POST['case'][1];
+    echo $_POST['case'];
+    $_SESSION["plateau"][$posy][$posx] = 'u';
+
+    echo $_SESSION["plateau"][$posx][$posy];
+
+    $_SESSION["chxdep"] = true;
+    return true;
   }
 
   //relancer une partie / reinitialiser le plateau
