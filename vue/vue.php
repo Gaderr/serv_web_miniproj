@@ -8,7 +8,9 @@ class Vue
     header("Content-type: text/html; charset=utf-8");
     ?>
     <html>
-
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
     <body>
     <h1>Solitaire</h1>
     <form method="post" action="index.php">
@@ -21,9 +23,14 @@ class Vue
     <?php
   }
 
-  function vuePlateau()
+  function menu()
   {
     ?>
+    <html>
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
     <h1>Solitaire</h1>
     <h2>
       <?php
@@ -37,11 +44,16 @@ class Vue
       }
       ?>
     </h2>
+    <?php
+  }
+
+  function vuePlateau()
+  {
+    ?>
     <h3>Plateau</h3>
     <p>Le but du jeu est de retirer toutes les billes jusqu'à ce qu'il n'en reste plus qu'une.</p>
     <p>Pour "manger" une bille, sélectionnez en une pour manger celle qui se trouve à côté d'elle. Pas de diagonale possible !</p>
     <?php
-    //$plt = $_SESSION["plateau"];
 
     echo '<form method="post" action="index.php"> <table border="1">';
     echo '<tr> <th></th>';
@@ -61,7 +73,7 @@ class Vue
         if ($key=="o")
         {
           $pos = $ix.$iy;
-          echo '<td> <input type="radio" name="case" id="choixcase" value="'.$pos.'">'.$key.'</td>';
+          echo '<td> <input type="radio" name="casedep" id="choixcase" value="'.$pos.'"></td>';
         }
         else
         {
@@ -85,14 +97,18 @@ class Vue
 
   function start()
   {
-    if($_SESSION['chxdep'] == false)
-    {
-      ?>
-      <p>Sélectionnez une bille à retirer pour commencer à jouer</p>
-      <input type="submit" name="J'ai sélectionné ma bille de départ" value="envoyer"/>
-      </form>
-      <?php
-    }
+    ?>
+    <p>Sélectionnez une bille à retirer pour commencer à jouer</p>
+    <input type="submit" name="J'ai sélectionné ma bille de départ" value="envoyer"/>
+    </form>
+    <?php
+  }
+
+  function jeu()
+  {
+    ?>
+    <p>C'est parti !</p>
+    <?php
   }
 }
 ?>

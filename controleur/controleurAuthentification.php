@@ -20,12 +20,18 @@ class ControleurAuthentification
 
   function affPlateau()
   {
+    $this->vue->menu();
     $this->vue->vuePlateau();
   }
 
   function affStartPlateau()
   {
     $this->vue->start();
+  }
+
+  function affJeu()
+  {
+    $this->vue->jeu();
   }
 
   function askStartPlateau()

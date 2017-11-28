@@ -43,21 +43,22 @@ class Routeur
 
     if($_SESSION['chxdep'] == false)
     {
-      //$this->ctrlAuthentification->affPlateau();
-      if(!isset($_POST['case']))
+      if(isset($_POST['casedep']))
       {
-        $this->ctrlAuthentification->affPlateau();
-        $this->ctrlAuthentification->affStartPlateau();
         $this->ctrlAuthentification->askStartPlateau();
+        $this->ctrlAuthentification->affPlateau();
+        $this->ctrlAuthentification->affJeu();
       }
       else
       {
         $this->ctrlAuthentification->affPlateau();
+        $this->ctrlAuthentification->affStartPlateau();
       }
     }
     else
     {
-      //$this->ctrlAuthentification->affPlateau();
+      $this->ctrlAuthentification->affPlateau();
+      $this->ctrlAuthentification->affJeu();
     }
   }
   //TODO Traitement des actions sur le plateau

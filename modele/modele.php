@@ -72,13 +72,9 @@ class Modele
   //Sélection de la première bille à supprimer pour commencer à jouer
   public function startGame()
   {
-    $posx = (int) $_POST['case'][0];
-    $posy = (int) $_POST['case'][1];
-    echo $_POST['case'];
+    $posx = (int) $_POST['casedep'][0];
+    $posy = (int) $_POST['casedep'][1];
     $_SESSION["plateau"][$posy][$posx] = 'u';
-
-    echo $_SESSION["plateau"][$posx][$posy];
-
     $_SESSION["chxdep"] = true;
     return true;
   }
