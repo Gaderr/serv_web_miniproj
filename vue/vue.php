@@ -52,7 +52,8 @@ class Vue
     ?>
     <h3>Plateau</h3>
     <p>Le but du jeu est de retirer toutes les billes jusqu'à ce qu'il n'en reste plus qu'une.</p>
-    <p>Pour "manger" une bille, sélectionnez en une pour manger celle qui se trouve à côté d'elle. Pas de diagonale possible !</p>
+    <p>Pour "manger" une bille, il faut qu'une bille puisse sauter par dessus une autre, sous réserve que la case opposée est vide !</p>
+    <p>Sélectionnez en une pour manger celle qui se trouve à côté d'elle. Pas de diagonale possible !</p>
     <?php
 
     echo '<form method="post" action="index.php">';
@@ -98,7 +99,7 @@ class Vue
   function start()
   {
     ?>
-      <p>Sélectionnez une bille à retirer pour commencer à jouer</p>
+      <p>Commencez par sélectionner n'importe quelle bille à retirer pour commencer à jouer</p>
       <input type="submit" name="start_post" value="J'ai sélectionné ma bille de départ"/>
     </form>
     <?php
