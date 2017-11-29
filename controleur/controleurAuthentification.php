@@ -29,14 +29,39 @@ class ControleurAuthentification
     $this->vue->start();
   }
 
-  function affJeu()
+  function affActionsJeu()
   {
-    $this->vue->jeu();
+    $this->vue->actionsJeu();
   }
 
   function askStartPlateau()
   {
     $this->modele->startGame();
+  }
+
+  function askHaut()
+  {
+    $this->modele->moveUp();
+  }
+
+  function askBas()
+  {
+    $this->modele->moveDown();
+  }
+
+  function askGauche()
+  {
+    $this->modele->moveLeft();
+  }
+
+  function askDroite()
+  {
+    $this->modele->moveRight();
+  }
+
+  function askInit()
+  {
+    $this->modele->reInit();
   }
 
   function checkAuth($pseudo, $passw)

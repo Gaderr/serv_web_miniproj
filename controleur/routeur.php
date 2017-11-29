@@ -9,7 +9,6 @@ class Routeur
   public function __construct()
   {
     $this->ctrlAuthentification= new ControleurAuthentification();
-    $_SESSION['chxdep'] = false;
   }
 
   // Traite une requête entrante
@@ -41,13 +40,18 @@ class Routeur
       $this->ctrlAuthentification->affPlateau(); //TODO Afficher le plateau
     }*/
 
-    if($_SESSION['chxdep'] == false)
+    if(isset($_POST["reset_post"]))
     {
-      if(isset($_POST['casedep']))
+      $this->ctrlAuthentification->askInit();
+    }
+
+    if($_SESSION["chxdep"] == false)
+    {
+      if(isset($_POST["case"]))
       {
         $this->ctrlAuthentification->askStartPlateau();
         $this->ctrlAuthentification->affPlateau();
-        $this->ctrlAuthentification->affJeu();
+        $this->ctrlAuthentification->affActionsJeu();
       }
       else
       {
@@ -57,10 +61,29 @@ class Routeur
     }
     else
     {
+      if(isset($_POST["direction"]) && isset($_POST['case']))
+      {
+        switch ($_POST["direction"])
+        {
+          case "Haut":
+            $this->ctrlAuthentification->askHaut();
+            break;
+          case "Bas":
+            $this->ctrlAuthentification->askBas();
+            break;
+          case "Gauche":
+            $this->ctrlAuthentification->askGauche();
+            break;
+          case "Droite":
+            $this->ctrlAuthentification->askDroite();
+            break;
+        }
+      }
       $this->ctrlAuthentification->affPlateau();
-      $this->ctrlAuthentification->affJeu();
+      $this->ctrlAuthentification->affActionsJeu();
     }
   }
+
   //TODO Traitement des actions sur le plateau
 }
 ?>

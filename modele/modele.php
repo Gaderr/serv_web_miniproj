@@ -41,8 +41,10 @@ class Modele
       }
     }
 
-    $_SESSION["plateau"] = $plateau; //TODO Utiliser une variable de session pour le plateau dans le reste des classes
-    $_SESSION["chxdep"] = false;
+    if(!isset($_SESSION["plateau"]))
+    {
+      $_SESSION["plateau"] = $plateau; //TODO Utiliser une variable de session pour le plateau dans le reste des classes
+    }
 
     //résultat :
     //  +---------------> axe X
@@ -56,7 +58,7 @@ class Modele
     //  v
     //  axe Y
 
-    try
+    /*try
     {
       $chaine="mysql:host=".HOST.";dbname=".BD;
       $this->connexion = new PDO($chaine,LOGIN,PASSWORD);
@@ -66,17 +68,17 @@ class Modele
     {
       $exception=new ConnexionException("problème de connexion à la base");
       throw $exception;
-    }
+    }*/
   }
 
   //Sélection de la première bille à supprimer pour commencer à jouer
   public function startGame()
   {
-    $posx = (int) $_POST['casedep'][0];
-    $posy = (int) $_POST['casedep'][1];
+    $posx = (int) $_POST["case"][0];
+    $posy = (int) $_POST["case"][1];
     $_SESSION["plateau"][$posy][$posx] = 'u';
     $_SESSION["chxdep"] = true;
-    return true;
+    //$_SESSION["reinit"] = true;
   }
 
   //relancer une partie / reinitialiser le plateau
@@ -86,83 +88,66 @@ class Modele
     {
       for($colonne = 0; $colonne < 7; $colonne++)
       {
-        $plateau[$ligne][$colonne] = 'o';
+        $_SESSION["plateau"][$colonne][$ligne] = 'o';
       }
     }
     for($colonne = 2; $colonne < 5; $colonne++)
     {
       for($ligne = 0; $ligne < 7; $ligne++)
       {
-        $plateau[$ligne][$colonne] = 'o';
+        $_SESSION["plateau"][$colonne][$ligne] = 'o';
       }
     }
+    $_SESSION["chxdep"] = false;
+    unset($_POST["case"]);
+    unset($_POST["reset_pos"]);
   }
 
-  public function moveUp($positions)
+  public function moveUp()
   {
-    $x = $positions[0];
-    $y = $positions[1];
-    if($this->plateau[x][y - 1] == 'o' && $this->plateau[x][y - 2] == 'u')
+    $posx = (int) $_POST["case"][0];
+    $posy = (int) $_POST["case"][1];
+    if($_SESSION["plateau"][$posy - 1][$posx] == 'o' && $_SESSION["plateau"][$posy - 2][$posx] == 'u')
     {
-      $this->plateau[x][y - 1] == 'u'; //bille supprimée
-      $this->plateau[x][y - 2] == 'o'; //bille placée
-      $this->plateau[x][y] == 'u'; //bille supprimée
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-  }
-
-  public function moveDown($positions)
-  {
-    $x = $positions[0];
-    $y = $positions[1];
-    if($this->plateau[x][y + 1] == 'o' && $this->plateau[x][y - 2] == 'u')
-    {
-      $this->plateau[x][y + 1] == 'u'; //bille supprimée
-      $this->plateau[x][y + 2] == 'o'; //bille placée
-      $this->plateau[x][y] == 'u'; //bille supprimée
-      return true;
-    }
-    else
-    {
-      return false;
+      $_SESSION["plateau"][$posy - 1][$posx] = 'u';
+      $_SESSION["plateau"][$posy - 2][$posx] = 'o';
+      $_SESSION["plateau"][$posy][$posx] = 'u';
     }
   }
 
-  public function moveLeft($positions)
+  public function moveDown()
   {
-    $x = $positions[0];
-    $y = $positions[1];
-    if($this->plateau[x - 1][y] == 'o' && $this->plateau[x][y - 2] == 'u')
+    $posx = (int) $_POST["case"][0];
+    $posy = (int) $_POST["case"][1];
+    if($_SESSION["plateau"][$posy + 1][$posx] == 'o' && $_SESSION["plateau"][$posy + 2][$posx] == 'u')
     {
-      $this->plateau[x - 1][y] == 'u'; //bille supprimée
-      $this->plateau[x - 2][y] == 'o'; //bille placée
-      $this->plateau[x][y] == 'u'; //bille supprimée
-      return true;
-    }
-    else
-    {
-      return false;
+      $_SESSION["plateau"][$posy + 1][$posx] = 'u';
+      $_SESSION["plateau"][$posy + 2][$posx] = 'o';
+      $_SESSION["plateau"][$posy][$posx] = 'u';
     }
   }
 
-  public function moveRight($positions)
+  public function moveLeft()
   {
-    $x = $positions[0];
-    $y = $positions[1];
-    if($this->plateau[x + 1][y] == 'o' && $this->plateau[x][y - 2] == 'u')
+    $posx = (int) $_POST["case"][0];
+    $posy = (int) $_POST["case"][1];
+    if($_SESSION["plateau"][$posy][$posx - 1] == 'o' && $_SESSION["plateau"][$posy][$posx - 2] == 'u')
     {
-      $this->plateau[x + 1][y] == 'u'; //bille supprimée
-      $this->plateau[x + 2][y] == 'o'; //bille placée
-      $this->plateau[x][y] == 'u'; //bille supprimée
-      return true;
+      $_SESSION["plateau"][$posy][$posx - 1] = 'u';
+      $_SESSION["plateau"][$posy][$posx - 2] = 'o';
+      $_SESSION["plateau"][$posy][$posx] = 'u';
     }
-    else
+  }
+
+  public function moveRight()
+  {
+    $posx = (int) $_POST["case"][0];
+    $posy = (int) $_POST["case"][1];
+    if($_SESSION["plateau"][$posy][$posx + 1] == 'o' && $_SESSION["plateau"][$posy][$posx + 2] == 'u')
     {
-      return false;
+      $_SESSION["plateau"][$posy][$posx + 1] = 'u';
+      $_SESSION["plateau"][$posy][$posx + 2] = 'o';
+      $_SESSION["plateau"][$posy][$posx] = 'u';
     }
   }
 

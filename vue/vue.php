@@ -31,12 +31,12 @@ class Vue
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     </head>
     <body>
-    <h1>Solitaire</h1>
+    <h1>Casse-tête : Le Solitaire</h1>
     <h2>
       <?php
       if(isset($_SESSION["pseudo"]))
       {
-        echo $_SESSION["pseudo"];
+        echo "Joueur : ".$_SESSION["pseudo"];
       }
       else
       {
@@ -55,8 +55,8 @@ class Vue
     <p>Pour "manger" une bille, sélectionnez en une pour manger celle qui se trouve à côté d'elle. Pas de diagonale possible !</p>
     <?php
 
-    echo '<form method="post" action="index.php"> <table border="1">';
-    echo '<tr> <th></th>';
+    echo '<form method="post" action="index.php">';
+    echo '<table border="1"> <tr> <th></th>';
     for($ix = 0; $ix < 7; $ix++)
     {
       echo '<th>'.$ix.'</th>';
@@ -73,7 +73,7 @@ class Vue
         if ($key=="o")
         {
           $pos = $ix.$iy;
-          echo '<td> <input type="radio" name="casedep" id="choixcase" value="'.$pos.'"></td>';
+          echo '<td> <input type="radio" name="case" id="choixcase" value="'.$pos.'"></td>';
         }
         else
         {
@@ -98,16 +98,24 @@ class Vue
   function start()
   {
     ?>
-    <p>Sélectionnez une bille à retirer pour commencer à jouer</p>
-    <input type="submit" name="J'ai sélectionné ma bille de départ" value="envoyer"/>
+      <p>Sélectionnez une bille à retirer pour commencer à jouer</p>
+      <input type="submit" name="start_post" value="J'ai sélectionné ma bille de départ"/>
     </form>
     <?php
   }
 
-  function jeu()
+  function actionsJeu()
   {
     ?>
-    <p>C'est parti !</p>
+      <p>Sélectionnez une bille, puis un déplacement</p>
+      <input type="submit" name="direction" value="Haut">
+      <input type="submit" name="direction" value="Bas">
+      <input type="submit" name="direction" value="Gauche">
+      <input type="submit" name="direction" value="Droite">
+    </form>
+    <form method="post" action="index.php">
+      <input type="submit" name="reset_post" value="Remettre à zéro">
+    </form>
     <?php
   }
 }
