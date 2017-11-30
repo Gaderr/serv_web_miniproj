@@ -15,6 +15,7 @@ class ControleurAuthentification
 
   function accueil()
   {
+    $this->vue->menu();
     $this->vue->vueLogin();
   }
 
@@ -66,16 +67,7 @@ class ControleurAuthentification
 
   function checkAuth($pseudo, $passw)
   {
-    if($this->modele->checkAuth($pseudo, $passw))
-    {
-      $_SESSION["auth"] = true;
-      $_SESSION["pseudo"] = $pseudo;
-      return true;
-    }
-    else
-    {
-      return false;
-    }
+    return $this->modele->checkAuth($pseudo, $passw);
   }
 }
 ?>

@@ -13,9 +13,6 @@ define("PATH_METIER",HOME_SITE."/metier");
 
 
 // données pour la connexion au sgbd
-
-// remplacer les X par vos identifiants de connexion à mysql
-
 define("HOST","localhost");
 define("BD","E164968N");
 define("LOGIN","E164968N");

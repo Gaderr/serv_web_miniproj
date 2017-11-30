@@ -1,28 +1,8 @@
 <?php
 //require_once PATH_METIER."/Message.php";
-
+//header("Content-type: text/html; charset=utf-8");
 class Vue
 {
-  function vueLogin()
-  {
-    header("Content-type: text/html; charset=utf-8");
-    ?>
-    <html>
-    <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    </head>
-    <body>
-    <h1>Solitaire</h1>
-    <form method="post" action="index.php">
-    Entrer votre pseudo  <input type="text" name="pseudo"/>
-    </br>
-    Entrer votre mot de passe  <input type="text" name="passw"/>
-    </br>
-    <input type="submit" name="soumettre" value="envoyer"/>
-    </form>
-    <?php
-  }
-
   function menu()
   {
     ?>
@@ -44,6 +24,19 @@ class Vue
       }
       ?>
     </h2>
+    <?php
+  }
+
+  function vueLogin()
+  {
+    ?>
+    <form method="post" action="index.php">
+    Entrer votre pseudo  <input type="text" name="pseudo"/>
+    </br>
+    Entrer votre mot de passe  <input type="text" name="passw"/>
+    </br>
+    <input type="submit" name="soumettre" value="envoyer"/>
+    </form>
     <?php
   }
 

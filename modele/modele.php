@@ -41,9 +41,10 @@ class Modele
       }
     }
 
-    if(!isset($_SESSION["plateau"]))
+    if(!isset($_SESSION["plateau"]) && !isset($_SESSION["billes"]))
     {
-      $_SESSION["plateau"] = $plateau; //TODO Utiliser une variable de session pour le plateau dans le reste des classes
+      $_SESSION["plateau"] = $plateau;
+      $_SESSION["billes"] = 33;
     }
 
     //résultat :
@@ -58,7 +59,7 @@ class Modele
     //  v
     //  axe Y
 
-    /*try
+    try
     {
       $chaine="mysql:host=".HOST.";dbname=".BD;
       $this->connexion = new PDO($chaine,LOGIN,PASSWORD);
@@ -68,7 +69,7 @@ class Modele
     {
       $exception=new ConnexionException("problème de connexion à la base");
       throw $exception;
-    }*/
+    }
   }
 
   //Sélection de la première bille à supprimer pour commencer à jouer
@@ -78,7 +79,7 @@ class Modele
     $posy = (int) $_POST["case"][1];
     $_SESSION["plateau"][$posy][$posx] = 'u';
     $_SESSION["chxdep"] = true;
-    //$_SESSION["reinit"] = true;
+    $_SESSION["billes"]--;
   }
 
   //relancer une partie / reinitialiser le plateau
@@ -150,6 +151,16 @@ class Modele
       $_SESSION["plateau"][$posy][$posx] = 'u';
     }
   }
+
+  public function calcVict()
+  {
+
+  }
+
+  //TODO Méthode calcul de victoire
+  //TODO Méthode calcul de défaite
+  //TODO Feuille de style
+  //TODO Messages d'erreur
 
   //Déconnexion de la base
   public function deconnexion()

@@ -14,76 +14,75 @@ class Routeur
   // Traite une requête entrante
   public function routerRequete()
   {
-    /*if($_SESSION["auth"] == false) //Le cookie est inexistant
+    //Authentification
+    if(isset($_POST['pseudo']) && isset($_POST['passw'])) //Le formulaire a été envoyé;
     {
-      if(isset($_POST['pseudo']) && isset($_POST['passw'])) //Le formulaire a été envoyé;
+      $pseudo = $_POST['pseudo'];
+      $mdp = $_POST['passw'];
+      if($this->ctrlAuthentification->checkAuth($pseudo, $mdp))
       {
-        $pseudo = $_POST['pseudo'];
-        $mdp = $_POST['passw'];
-        if($this->ctrlAuthentification->checkAuth($pseudo, $mdp)) //vérif login
-        {
-          $this->ctrlAuthentification->affPlateau(); //TODO Afficher le plateau
-          $prompt = true;
-        }
-        else //Erreur
-        {
-          echo "Problème d'authentification";
-        }
-      }
-      else //Le formulaire n'a pas été envoyé
-      {
-        $this->ctrlAuthentification->accueil();
+        $_SESSION["auth"] = true;
+        $_SESSION["pseudo"] = $pseudo;
       }
     }
-    else //Le cookie existe
-    {
-      $this->ctrlAuthentification->affPlateau(); //TODO Afficher le plateau
-    }*/
 
-    if(isset($_POST["reset_post"]))
+    //vérif Authentification
+    if($_SESSION["auth"] == false)
     {
-      $this->ctrlAuthentification->askInit();
-    }
-
-    if($_SESSION["chxdep"] == false)
-    {
-      if(isset($_POST["case"]))
-      {
-        $this->ctrlAuthentification->askStartPlateau();
-        $this->ctrlAuthentification->affPlateau();
-        $this->ctrlAuthentification->affActionsJeu();
-      }
-      else
-      {
-        $this->ctrlAuthentification->affPlateau();
-        $this->ctrlAuthentification->affStartPlateau();
-      }
+      $this->ctrlAuthentification->accueil();
+      $_SESSION["chxdep"] = false;
+      unset($_POST['pseudo']);
+      unset($_POST['passw']);
     }
     else
     {
-      if(isset($_POST["direction"]) && isset($_POST['case']))
+      //Reinitialiser la partie
+      if(isset($_POST["reset_post"]))
       {
-        switch ($_POST["direction"])
+        $this->ctrlAuthentification->askInit();
+      }
+
+      //Choix de la bille de départ
+      if($_SESSION["chxdep"] == false)
+      {
+        //Bille choisie
+        if(isset($_POST["case"]))
         {
-          case "Haut":
-            $this->ctrlAuthentification->askHaut();
-            break;
-          case "Bas":
-            $this->ctrlAuthentification->askBas();
-            break;
-          case "Gauche":
-            $this->ctrlAuthentification->askGauche();
-            break;
-          case "Droite":
-            $this->ctrlAuthentification->askDroite();
-            break;
+          $this->ctrlAuthentification->askStartPlateau();
+          $this->ctrlAuthentification->affPlateau();
+          $this->ctrlAuthentification->affActionsJeu();
+        }
+        else
+        {
+          $this->ctrlAuthentification->affPlateau();
+          $this->ctrlAuthentification->affStartPlateau();
         }
       }
-      $this->ctrlAuthentification->affPlateau();
-      $this->ctrlAuthentification->affActionsJeu();
+      else
+      {
+        //Une bille et une direction ont été choisis
+        if(isset($_POST["direction"]) && isset($_POST['case']))
+        {
+          switch ($_POST["direction"])
+          {
+            case "Haut":
+              $this->ctrlAuthentification->askHaut();
+              break;
+            case "Bas":
+              $this->ctrlAuthentification->askBas();
+              break;
+            case "Gauche":
+              $this->ctrlAuthentification->askGauche();
+              break;
+            case "Droite":
+              $this->ctrlAuthentification->askDroite();
+              break;
+          }
+        }
+        $this->ctrlAuthentification->affPlateau();
+        $this->ctrlAuthentification->affActionsJeu();
+      }
     }
   }
-
-  //TODO Traitement des actions sur le plateau
 }
 ?>
