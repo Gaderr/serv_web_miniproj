@@ -3,7 +3,7 @@
 //header("Content-type: text/html; charset=utf-8");
 class Vue
 {
-  function menu()
+  function titres()
   {
     ?>
     <html>
@@ -24,6 +24,7 @@ class Vue
       }
       ?>
     </h2>
+    <p> toto / toto </p>
     <?php
   }
 
@@ -45,7 +46,7 @@ class Vue
     ?>
     <h3>Plateau</h3>
     <p>Le but du jeu est de retirer toutes les billes jusqu'à ce qu'il n'en reste plus qu'une.</p>
-    <p>Pour "manger" une bille, il faut qu'une bille puisse sauter par dessus une autre, sous réserve que la case opposée est vide !</p>
+    <p>Pour "manger" une bille, il faut qu'une bille puisse sauter par dessus une autre, sous réserve que la case d'arrivée soit vide !</p>
     <p>Sélectionnez en une pour manger celle qui se trouve à côté d'elle. Pas de diagonale possible !</p>
     <?php
 
@@ -87,6 +88,11 @@ class Vue
       }
     }
     echo '</table>';
+  }
+
+  function coups()
+  {
+    echo "<p>Nombre de coups jouables : ".$_SESSION["coups_j"]." coups.</p>";
   }
 
   function start()

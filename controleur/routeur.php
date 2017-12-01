@@ -1,45 +1,46 @@
 <?php
 
-require_once 'controleurAuthentification.php';
+require_once 'Controleur.php';
 
 class Routeur
 {
-  private $ctrlAuthentification;
+  private $ctrl;
 
   public function __construct()
   {
-    $this->ctrlAuthentification= new ControleurAuthentification();
+    $this->ctrl= new Controleur();
   }
 
   // Traite une requête entrante
   public function routerRequete()
   {
+    //print_r($_SESSION);
     //Authentification
-    if(isset($_POST['pseudo']) && isset($_POST['passw'])) //Le formulaire a été envoyé;
+    if(isset($_POST['pseudo']) && isset($_POST['passw'])) //login envoyé;
     {
       $pseudo = $_POST['pseudo'];
       $mdp = $_POST['passw'];
-      if($this->ctrlAuthentification->checkAuth($pseudo, $mdp))
+      if($this->ctrl->checkAuth($pseudo, $mdp))
       {
-        $_SESSION["auth"] = true;
         $_SESSION["pseudo"] = $pseudo;
+        unset($_POST['pseudo']);
+        unset($_POST['passw']);
       }
     }
 
     //vérif Authentification
-    if($_SESSION["auth"] == false)
+    if(!isset($_SESSION["pseudo"]))
     {
-      $this->ctrlAuthentification->accueil();
+      $this->ctrl->accueil();//titres + login
       $_SESSION["chxdep"] = false;
-      unset($_POST['pseudo']);
-      unset($_POST['passw']);
     }
     else
     {
+
       //Reinitialiser la partie
       if(isset($_POST["reset_post"]))
       {
-        $this->ctrlAuthentification->askInit();
+        $this->ctrl->askInit();
       }
 
       //Choix de la bille de départ
@@ -48,14 +49,16 @@ class Routeur
         //Bille choisie
         if(isset($_POST["case"]))
         {
-          $this->ctrlAuthentification->askStartPlateau();
-          $this->ctrlAuthentification->affPlateau();
-          $this->ctrlAuthentification->affActionsJeu();
+          $this->ctrl->askStartPlateau();
+          $this->ctrl->affPlateau();
+          $this->ctrl->checkCoups();
+          $this->ctrl->affCoups();
+          $this->ctrl->affActionsJeu();
         }
         else
         {
-          $this->ctrlAuthentification->affPlateau();
-          $this->ctrlAuthentification->affStartPlateau();
+          $this->ctrl->affPlateau();
+          $this->ctrl->affStartPlateau();
         }
       }
       else
@@ -66,21 +69,23 @@ class Routeur
           switch ($_POST["direction"])
           {
             case "Haut":
-              $this->ctrlAuthentification->askHaut();
+              $this->ctrl->askHaut();
               break;
             case "Bas":
-              $this->ctrlAuthentification->askBas();
+              $this->ctrl->askBas();
               break;
             case "Gauche":
-              $this->ctrlAuthentification->askGauche();
+              $this->ctrl->askGauche();
               break;
             case "Droite":
-              $this->ctrlAuthentification->askDroite();
+              $this->ctrl->askDroite();
               break;
           }
         }
-        $this->ctrlAuthentification->affPlateau();
-        $this->ctrlAuthentification->affActionsJeu();
+        $this->ctrl->affPlateau();
+        $this->ctrl->checkCoups();
+        $this->ctrl->affCoups();
+        $this->ctrl->affActionsJeu();
       }
     }
   }

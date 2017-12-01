@@ -41,12 +41,6 @@ class Modele
       }
     }
 
-    if(!isset($_SESSION["plateau"]) && !isset($_SESSION["billes"]))
-    {
-      $_SESSION["plateau"] = $plateau;
-      $_SESSION["billes"] = 33;
-    }
-
     //résultat :
     //  +---------------> axe X
     //  | X X o o o X X
@@ -59,7 +53,14 @@ class Modele
     //  v
     //  axe Y
 
-    try
+    if(!isset($_SESSION["plateau"]) && !isset($_SESSION["billes"]))
+    {
+      $_SESSION["plateau"] = $plateau;
+      $_SESSION["billes"] = 33;
+    }
+
+
+    /*try
     {
       $chaine="mysql:host=".HOST.";dbname=".BD;
       $this->connexion = new PDO($chaine,LOGIN,PASSWORD);
@@ -69,7 +70,7 @@ class Modele
     {
       $exception=new ConnexionException("problème de connexion à la base");
       throw $exception;
-    }
+    }*/
   }
 
   //Sélection de la première bille à supprimer pour commencer à jouer
@@ -154,10 +155,43 @@ class Modele
 
   public function calcVict()
   {
-
+    return $_SESSION["billes"] == 1;
   }
 
-  //TODO Méthode calcul de victoire
+  public function calcCoups()
+  {
+    $coups = 0;
+    for($ligne = 0; $ligne < 7; $ligne++)
+    {
+      for($colonne = 0; $colonne < 7; $colonne++)
+      {
+        if($_SESSION["plateau"][$colonne][$ligne] == 'o') // on teste toutes les billes sur le plateau
+        {
+          //Haut
+          if($_SESSION["plateau"][$colonne - 1][$ligne] == 'o' && $_SESSION["plateau"][$colonne - 2][$ligne] == 'u')
+          {
+            $coups++;
+          }
+          //Bas
+          if($_SESSION["plateau"][$colonne + 1][$ligne] == 'o' && $_SESSION["plateau"][$colonne + 2][$ligne] == 'u')
+          {
+            $coups++;
+          }
+          //Gauche
+          if($_SESSION["plateau"][$colonne][$ligne - 1] == 'o' && $_SESSION["plateau"][$colonne][$ligne - 2] == 'u')
+          {
+            $coups++;
+          }
+          //Droite
+          if($_SESSION["plateau"][$colonne][$ligne + 1] == 'o' && $_SESSION["plateau"][$colonne][$ligne + 2] == 'u')
+          {
+            $coups++;
+          }
+        }
+      }
+    }
+    $_SESSION["coups_j"] = $coups;
+  }
   //TODO Méthode calcul de défaite
   //TODO Feuille de style
   //TODO Messages d'erreur
@@ -170,11 +204,12 @@ class Modele
 
   public function checkAuth($pseudo, $pass)
   {
-    $statement = $this->connexion->prepare("SELECT motDePasse FROM joueurs where pseudo=?;");
+    /*$statement = $this->connexion->prepare("SELECT motDePasse FROM joueurs where pseudo=?;");
     $statement->bindParam(1, $pseudo);
     $statement->execute();
     $result=$statement->fetch(PDO::FETCH_ASSOC);
-    if(crypt($pass, $result['motDePasse']) == $result['motDePasse'])
+    if(crypt($pass, $result['motDePasse']) == $result['motDePasse'])*/
+    if($pseudo == "toto" && $pass == "toto")//tests locaux
     {
       return true;
     }

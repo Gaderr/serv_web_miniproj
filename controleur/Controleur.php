@@ -1,8 +1,8 @@
 <?php
-require_once PATH_VUE."/vue.php";
-require PATH_MODELE."/modele.php";
+require_once PATH_VUE."/Vue.php";
+require PATH_MODELE."/Modele.php";
 
-class ControleurAuthentification
+class Controleur
 {
   private $vue;
   private $modele;
@@ -15,13 +15,13 @@ class ControleurAuthentification
 
   function accueil()
   {
-    $this->vue->menu();
+    $this->vue->titres();
     $this->vue->vueLogin();
   }
 
   function affPlateau()
   {
-    $this->vue->menu();
+    $this->vue->titres();
     $this->vue->vuePlateau();
   }
 
@@ -63,6 +63,16 @@ class ControleurAuthentification
   function askInit()
   {
     $this->modele->reInit();
+  }
+
+  function checkCoups()
+  {
+    $this->modele->calcCoups();
+  }
+
+  function affCoups()
+  {
+    $this->vue->coups();
   }
 
   function checkAuth($pseudo, $passw)
