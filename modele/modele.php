@@ -101,6 +101,7 @@ class Modele
       }
     }
     $_SESSION["chxdep"] = false;
+    $_SESSION["billes"] = 33;
     unset($_POST["case"]);
     unset($_POST["reset_pos"]);
   }
@@ -114,6 +115,7 @@ class Modele
       $_SESSION["plateau"][$posy - 1][$posx] = 'u';
       $_SESSION["plateau"][$posy - 2][$posx] = 'o';
       $_SESSION["plateau"][$posy][$posx] = 'u';
+      $_SESSION["billes"]--;
     }
   }
 
@@ -126,6 +128,7 @@ class Modele
       $_SESSION["plateau"][$posy + 1][$posx] = 'u';
       $_SESSION["plateau"][$posy + 2][$posx] = 'o';
       $_SESSION["plateau"][$posy][$posx] = 'u';
+      $_SESSION["billes"]--;
     }
   }
 
@@ -138,6 +141,7 @@ class Modele
       $_SESSION["plateau"][$posy][$posx - 1] = 'u';
       $_SESSION["plateau"][$posy][$posx - 2] = 'o';
       $_SESSION["plateau"][$posy][$posx] = 'u';
+      $_SESSION["billes"]--;
     }
   }
 
@@ -150,12 +154,8 @@ class Modele
       $_SESSION["plateau"][$posy][$posx + 1] = 'u';
       $_SESSION["plateau"][$posy][$posx + 2] = 'o';
       $_SESSION["plateau"][$posy][$posx] = 'u';
+      $_SESSION["billes"]--;
     }
-  }
-
-  public function calcVict()
-  {
-    return $_SESSION["billes"] == 1;
   }
 
   public function calcCoups()
@@ -192,9 +192,6 @@ class Modele
     }
     $_SESSION["coups_j"] = $coups;
   }
-  //TODO Méthode calcul de défaite
-  //TODO Feuille de style
-  //TODO Messages d'erreur
 
   //Déconnexion de la base
   public function deconnexion()

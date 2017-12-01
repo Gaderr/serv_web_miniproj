@@ -1,5 +1,4 @@
 <?php
-
 require_once 'Controleur.php';
 
 class Routeur
@@ -84,10 +83,30 @@ class Routeur
         }
         $this->ctrl->affPlateau();
         $this->ctrl->checkCoups();
-        $this->ctrl->affCoups();
-        $this->ctrl->affActionsJeu();
+        if($_SESSION["billes"] > 1 && $_SESSION["coups_j"] == 0)
+        {
+          $this->ctrl->affPerdu();
+        }
+        else
+        {
+          if($_SESSION["billes"] == 1 && $_SESSION["coups_j"] == 0)
+          {
+            $this->ctrl->affGagne();
+          }
+          else
+          {
+            $this->ctrl->affCoups();
+            $this->ctrl->affActionsJeu();
+          }
+        }
       }
     }
+    //TODO Vues de fin de partie
+    //TODO Enregistrement partie
+    //TODO Affichage statistiques joueur !!!!--> La table parties a des valeurs Booléenes, normal ?
+    //TODO Annulation du coup précédent
+    //TODO Feuille de style
+    //TODO Messages d'erreur (Authentification, mauvais déplacements)
   }
 }
 ?>

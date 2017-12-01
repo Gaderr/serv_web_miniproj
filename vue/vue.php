@@ -20,11 +20,10 @@ class Vue
       }
       else
       {
-        echo "Pas d'utilisateur connecté / Site en mode tests";
+        echo "Connexion [toto | toto]";
       }
       ?>
     </h2>
-    <p> toto / toto </p>
     <?php
   }
 
@@ -92,7 +91,7 @@ class Vue
 
   function coups()
   {
-    echo "<p>Nombre de coups jouables : ".$_SESSION["coups_j"]." coups.</p>";
+    echo "<p>Nombre de coups jouables : ".$_SESSION["coups_j"]." coups.</br>Nombre de billes restantes : ".$_SESSION["billes"]."</p>";
   }
 
   function start()
@@ -100,6 +99,24 @@ class Vue
     ?>
       <p>Commencez par sélectionner n'importe quelle bille à retirer pour commencer à jouer</p>
       <input type="submit" name="start_post" value="J'ai sélectionné ma bille de départ"/>
+    </form>
+    <?php
+  }
+
+  function vueFin()
+  {
+    ?>
+      <p>Vous avez perdu ! Dommage ! Voulez-vous recommencer ?</p>
+      <input type="submit" name="reset_post" value="Recommencer">
+    </form>
+    <?php
+  }
+
+  function vueGagne()
+  {
+    ?>
+      <p>Bravo vous avez gagné ! Souhaitez-vous recommencer ?</p>
+      <input type="submit" name="reset_post" value="Recommencer">
     </form>
     <?php
   }

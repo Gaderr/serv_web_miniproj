@@ -75,6 +75,16 @@ class Controleur
     $this->vue->coups();
   }
 
+  function affPerdu()
+  {
+    return $this->vue->vueFin();
+  }
+
+  function affGagne()
+  {
+    return $this->vue->vueGagne();
+  }
+
   function checkAuth($pseudo, $passw)
   {
     return $this->modele->checkAuth($pseudo, $passw);
