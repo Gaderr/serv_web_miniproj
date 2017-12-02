@@ -14,14 +14,18 @@ class Routeur
   public function routerRequete()
   {
     //print_r($_SESSION);
+
+    if(isset($_POST['logoff']))
+    {
+      $this->ctrl->deco();
+    }
+
     //Authentification
     if(isset($_POST['pseudo']) && isset($_POST['passw'])) //login envoyé;
     {
-      $pseudo = $_POST['pseudo'];
-      $mdp = $_POST['passw'];
-      if($this->ctrl->checkAuth($pseudo, $mdp))
+      if($this->ctrl->checkAuth($_POST['pseudo'], $_POST['passw']))
       {
-        $_SESSION["pseudo"] = $pseudo;
+        $_SESSION["pseudo"] = $_POST['pseudo'];
         unset($_POST['pseudo']);
         unset($_POST['passw']);
       }
@@ -83,6 +87,7 @@ class Routeur
         }
         $this->ctrl->affPlateau();
         $this->ctrl->checkCoups();
+        $this->ctrl->affCoups();
         if($_SESSION["billes"] > 1 && $_SESSION["coups_j"] == 0)
         {
           $this->ctrl->affPerdu();
@@ -91,22 +96,20 @@ class Routeur
         {
           if($_SESSION["billes"] == 1 && $_SESSION["coups_j"] == 0)
           {
+            $this->ctrl->affActionsJeu();
             $this->ctrl->affGagne();
           }
           else
           {
-            $this->ctrl->affCoups();
             $this->ctrl->affActionsJeu();
           }
         }
       }
     }
-    //TODO Vues de fin de partie
-    //TODO Enregistrement partie
-    //TODO Affichage statistiques joueur !!!!--> La table parties a des valeurs Booléenes, normal ?
-    //TODO Annulation du coup précédent
-    //TODO Feuille de style
     //TODO Messages d'erreur (Authentification, mauvais déplacements)
+    //TODO Enregistrement partie
+    //TODO Affichage statistiques joueur (!!!!--> La table parties a des valeurs Booléenes, normal ?)
+    //TODO Annulation du coup précédent
   }
 }
 ?>

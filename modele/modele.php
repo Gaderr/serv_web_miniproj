@@ -193,10 +193,13 @@ class Modele
     $_SESSION["coups_j"] = $coups;
   }
 
-  //Déconnexion de la base
+
   public function deconnexion()
   {
+    //Déconnexion de la base
     $this->connexion=null;
+    unset($_POST);
+    unset($_SESSION['pseudo']);
   }
 
   public function checkAuth($pseudo, $pass)

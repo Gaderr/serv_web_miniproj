@@ -89,5 +89,10 @@ class Controleur
   {
     return $this->modele->checkAuth($pseudo, $passw);
   }
+
+  function deco()
+  {
+    $this->modele->deconnexion();
+  }
 }
 ?>
