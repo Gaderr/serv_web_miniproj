@@ -112,10 +112,16 @@ class Modele
     $posy = (int) $_POST["case"][1];
     if($_SESSION["plateau"][$posy - 1][$posx] == 'o' && $_SESSION["plateau"][$posy - 2][$posx] == 'u')
     {
+      $_SESSION["plateau_pre"] = $_SESSION["plateau"];
       $_SESSION["plateau"][$posy - 1][$posx] = 'u';
       $_SESSION["plateau"][$posy - 2][$posx] = 'o';
       $_SESSION["plateau"][$posy][$posx] = 'u';
       $_SESSION["billes"]--;
+      return true;
+    }
+    else
+    {
+      return false;
     }
   }
 
@@ -125,10 +131,16 @@ class Modele
     $posy = (int) $_POST["case"][1];
     if($_SESSION["plateau"][$posy + 1][$posx] == 'o' && $_SESSION["plateau"][$posy + 2][$posx] == 'u')
     {
+      $_SESSION["plateau_pre"] = $_SESSION["plateau"];
       $_SESSION["plateau"][$posy + 1][$posx] = 'u';
       $_SESSION["plateau"][$posy + 2][$posx] = 'o';
       $_SESSION["plateau"][$posy][$posx] = 'u';
       $_SESSION["billes"]--;
+      return true;
+    }
+    else
+    {
+      return false;
     }
   }
 
@@ -138,10 +150,16 @@ class Modele
     $posy = (int) $_POST["case"][1];
     if($_SESSION["plateau"][$posy][$posx - 1] == 'o' && $_SESSION["plateau"][$posy][$posx - 2] == 'u')
     {
+      $_SESSION["plateau_pre"] = $_SESSION["plateau"];
       $_SESSION["plateau"][$posy][$posx - 1] = 'u';
       $_SESSION["plateau"][$posy][$posx - 2] = 'o';
       $_SESSION["plateau"][$posy][$posx] = 'u';
       $_SESSION["billes"]--;
+      return true;
+    }
+    else
+    {
+      return false;
     }
   }
 
@@ -151,10 +169,16 @@ class Modele
     $posy = (int) $_POST["case"][1];
     if($_SESSION["plateau"][$posy][$posx + 1] == 'o' && $_SESSION["plateau"][$posy][$posx + 2] == 'u')
     {
+      $_SESSION["plateau_pre"] = $_SESSION["plateau"];
       $_SESSION["plateau"][$posy][$posx + 1] = 'u';
       $_SESSION["plateau"][$posy][$posx + 2] = 'o';
       $_SESSION["plateau"][$posy][$posx] = 'u';
       $_SESSION["billes"]--;
+      return true;
+    }
+    else
+    {
+      return false;
     }
   }
 
@@ -193,6 +217,12 @@ class Modele
     $_SESSION["coups_j"] = $coups;
   }
 
+  public function cancel()
+  {
+    $_SESSION["plateau"] = $_SESSION["plateau_pre"];
+    $_SESSION["billes"]++;
+    unset($_SESSION["plateau_pre"]);
+  }
 
   public function deconnexion()
   {

@@ -13,10 +13,10 @@ class Controleur
     $this->modele = new Modele();
   }
 
-  function accueil()
+  function accueil($arg)
   {
     $this->vue->titres();
-    $this->vue->vueLogin();
+    $this->vue->vueLogin($arg);
   }
 
   function affPlateau()
@@ -42,22 +42,22 @@ class Controleur
 
   function askHaut()
   {
-    $this->modele->moveUp();
+    return $this->modele->moveUp();
   }
 
   function askBas()
   {
-    $this->modele->moveDown();
+    return $this->modele->moveDown();
   }
 
   function askGauche()
   {
-    $this->modele->moveLeft();
+    return $this->modele->moveLeft();
   }
 
   function askDroite()
   {
-    $this->modele->moveRight();
+    return $this->modele->moveRight();
   }
 
   function askInit()
@@ -83,6 +83,16 @@ class Controleur
   function affGagne()
   {
     return $this->vue->vueGagne();
+  }
+
+  function affAlerte($arg)
+  {
+    $this->vue->alerte($arg);
+  }
+
+  function cancel()
+  {
+    $this->modele->cancel();
   }
 
   function checkAuth($pseudo, $passw)

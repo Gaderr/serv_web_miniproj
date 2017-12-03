@@ -64,34 +64,49 @@ class Vue
       <?php
   }
 
-  function vueLogin()
+  function vueLogin($arg)
   {
-    ?>
-    <form class="form-signin" method="post" action="index.php">
-        <h2 class="form-signin-heading">Veuillez vous connecter</h2>
-        <label for="inputText" class="sr-only">Pseudo</label>
-        <input type="text" id="inputEmail" class="form-control" placeholder="Pseudo" required autofocus name="pseudo">
-        <label for="inputPassword" class="sr-only">Mot de passe</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Mot de passe" required name="passw">
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
-      </form>
-    <?php
+    if(!$arg)
+    {
+      ?>
+      <form class="form-signin" method="post" action="index.php">
+          <h2 class="form-signin-heading">Veuillez vous connecter</h2>
+          <label for="inputText" class="sr-only">Pseudo</label>
+          <input type="text" id="inputEmail" class="form-control" placeholder="Pseudo" required autofocus name="pseudo">
+          <label for="inputPassword" class="sr-only">Mot de passe</label>
+          <input type="password" id="inputPassword" class="form-control" placeholder="Mot de passe" required name="passw">
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
+        </form>
+      <?php
+    }
+    else
+    {
+      ?>
+      <form class="form-signin" method="post" action="index.php">
+          <h2 class="form-signin-heading">Veuillez vous connecter</h2>
+          <label for="inputText" class="sr-only">Pseudo</label>
+          <input type="text" id="inputEmail" class="form-control is-invalid" placeholder="Pseudo" required autofocus name="pseudo">
+          <label for="inputPassword" class="sr-only">Mot de passe</label>
+          <input type="password" id="inputPassword" class="form-control is-invalid" placeholder="Mot de passe" required name="passw">
+          <div class="invalid-feedback">
+            Identifiant ou mot de passe incorrect(s).
+          </div>
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
+        </form>
+      <?php
+    }
   }
 
   function vuePlateau()
   {
     ?>
     <div class="container">
-      <h1>Casse-tête : Le Solitaire <small class="text-muted">Plateau anglais</small></h1>
+      <h1>Casse-tête : Le Solitaire <small class="text-muted">(Peg solitaire)</small></h1>
       <p class="lead">A vous de jouer !
       <hr class="my-4">
       Les règles sont simples : Le but est de retirer toutes les billes jusqu'à ce qu'il n'en reste plus qu'une.
       Pour "manger" une bille, il faut qu'une bille puisse sauter par dessus une autre, sous réserve que la case d'arrivée soit vide !
       Sélectionnez en une pour manger celle qui se trouve à côté d'elle. Pas de diagonale possible !
-    </div>
-
-    <div class="container">
-
     </div>
     </br>
     <div class="container">
@@ -109,29 +124,35 @@ class Vue
     {
       foreach( $val as $key )
       {
+        $pos = $ix.$iy;
         if ($key == "o")
         {
-          $pos = $ix.$iy;
           ?>
           <td bgcolor="#fff">
-            <div style="height: 50px; overflow:hidden;">
               <label class="custom-control custom-radio">
                 <input id="radio1" name="case" type="radio" class="custom-control-input" value="<?php echo $pos ?>">
                 <span class="custom-control-indicator"></span>
               </label>
-            </div>
           </td>
           <?php
         }
         else
         {
-          if($key == "x")
+          if($key == "u")
           {
-            echo '<td id="unplayable" bgcolor="#868e96"><div style="height: 25px;"></div> </td>';
+            //echo '<td bgcolor="#fff"></td>';
+            ?>
+            <td bgcolor="#fff">
+                <label class="custom-control custom-radio">
+                  <input id="radio1" name="case" type="radio" class="custom-control-input" value="<?php echo $pos ?>" disabled>
+                  <span class="custom-control-indicator"></span>
+                </label>
+            </td>
+            <?php
           }
           else
           {
-            echo '<td bgcolor="#fff"> </td>';
+            echo '<td id="unplayable"></td>';
           }
         }
         $ix++;
@@ -152,7 +173,7 @@ class Vue
 
   function coups()
   {
-    echo '<div class="col-lg-8"> <div class="alert alert-info">Nombre de coups jouables :<strong> '.$_SESSION["coups_j"].' coups.</strong></div><div class="alert alert-info">Nombre de billes restantes : <strong>'.$_SESSION["billes"].'</strong></div>';
+    echo '<div class="col-lg-8"> <div class="alert alert-info">Nombre de coups jouables :<strong> '.$_SESSION["coups_j"].'</strong></div><div class="alert alert-info">Nombre de billes restantes : <strong>'.$_SESSION["billes"].'</strong></div>';
   }
 
   function start()
@@ -171,6 +192,7 @@ class Vue
   function vueFin()
   {
     ?>
+          </div>
         </div>
       </div>
     </div>
@@ -192,6 +214,7 @@ class Vue
   function vueGagne()
   {
     ?>
+      </div>
     </div>
     </br>
     <div class="container">
@@ -212,17 +235,47 @@ class Vue
   function actionsJeu()
   {
     ?>
-          <p>Sélectionnez une bille, puis un déplacement</p>
-          <div class="btn-group">
-            <input type="submit" class="btn btn-primary" name="direction" value="Haut">
-            <input type="submit" class="btn btn-primary" name="direction" value="Bas">
-            <input type="submit" class="btn btn-primary" name="direction" value="Gauche">
-            <input type="submit" class="btn btn-primary" name="direction" value="Droite">
-            <input type="submit" class="btn btn-warning" name="reset_post" value="Remettre à zéro">
+        <p>Sélectionnez une bille, puis un déplacement</p>
+        <div class="btn-group">
+          <input type="submit" class="btn btn-primary" name="direction" value="Haut">
+          <input type="submit" class="btn btn-primary" name="direction" value="Bas">
+          <input type="submit" class="btn btn-primary" name="direction" value="Gauche">
+          <input type="submit" class="btn btn-primary" name="direction" value="Droite">
+        </div>
+        <div class="btn-group">
+          <?php
+          if(isset($_SESSION["plateau_pre"]))
+          {
+            echo '<input type="submit" class="btn btn-warning" name="cancel" value="Annuler le coup précédent">';
+          }
+          ?>
+          <input type="submit" class="btn btn-danger" name="reset_post" value="Remettre à zéro">
           </form>
         </div>
-      </div>
+
     <?php
+  }
+
+  function alerte($arg)
+  {
+    if($arg == "bille")
+    {
+      ?>
+        </br>
+        <div class="alert alert-danger" role="alert">
+          <strong>Vous devez d'abord choisir une bille !</strong>
+        </div>
+      <?php
+    }
+    if($arg == "move")
+    {
+      ?>
+        </br>
+        <div class="alert alert-danger" role="alert">
+          <strong>Déplacement impossible dans cette direction !</strong>
+        </div>
+      <?php
+    }
   }
 }
 ?>

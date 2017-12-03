@@ -45,12 +45,13 @@ body
   border-top-right-radius: 0;
 }
 
-/*TABLE*/
+/*GRILLE*/
 
 #plateau
 {
-  border: 2px solid black;
+  /*border: 2px solid black;*/
   table-layout: fixed;
+  text-align: center;
 }
 
 #plateau tr td
@@ -61,7 +62,8 @@ body
 
 #plateau tr td#unplayable
 {
-  border: 2px solid black;
+  /*border: 2px solid black;*/
+  border: none;
 }
 
 /*BILLES*/
@@ -69,4 +71,16 @@ body
 input[type="radio"]
 {
   display: none;
+}
+
+.custom-control
+{
+  margin-right: 0;
+  margin-left: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.custom-control-indicator
+{
+    background-color: #007bff;;
 }

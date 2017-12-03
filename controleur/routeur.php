@@ -15,26 +15,39 @@ class Routeur
   {
     //print_r($_SESSION);
 
+    //Déconnexion de l'utilisateur
     if(isset($_POST['logoff']))
     {
       $this->ctrl->deco();
+      $this->ctrl->askInit();
+    }
+
+    //Annulation du coup précédent
+    if(isset($_POST["cancel"]))
+    {
+      $this->ctrl->cancel();
     }
 
     //Authentification
     if(isset($_POST['pseudo']) && isset($_POST['passw'])) //login envoyé;
     {
-      if($this->ctrl->checkAuth($_POST['pseudo'], $_POST['passw']))
+      if($this->ctrl->checkAuth($_POST['pseudo'], $_POST['passw'], false))
       {
         $_SESSION["pseudo"] = $_POST['pseudo'];
         unset($_POST['pseudo']);
         unset($_POST['passw']);
+        $logerr = false;
+      }
+      else
+      {
+        $logerr = true;
       }
     }
 
     //vérif Authentification
     if(!isset($_SESSION["pseudo"]))
     {
-      $this->ctrl->accueil();//titres + login
+      $this->ctrl->accueil($logerr);//titres + login + verif erreur
       $_SESSION["chxdep"] = false;
     }
     else
@@ -66,50 +79,61 @@ class Routeur
       }
       else
       {
-        //Une bille et une direction ont été choisis
+        //Une bille et une direction ont été choisies
         if(isset($_POST["direction"]) && isset($_POST['case']))
         {
           switch ($_POST["direction"])
           {
             case "Haut":
-              $this->ctrl->askHaut();
+              $err = $this->ctrl->askHaut();
               break;
             case "Bas":
-              $this->ctrl->askBas();
+              $err = $this->ctrl->askBas();
               break;
             case "Gauche":
-              $this->ctrl->askGauche();
+              $err = $this->ctrl->askGauche();
               break;
             case "Droite":
-              $this->ctrl->askDroite();
+              $err = $this->ctrl->askDroite();
               break;
           }
         }
         $this->ctrl->affPlateau();
         $this->ctrl->checkCoups();
         $this->ctrl->affCoups();
+        $this->ctrl->affActionsJeu();
+        //Test victoire ou défaite
         if($_SESSION["billes"] > 1 && $_SESSION["coups_j"] == 0)
         {
+
           $this->ctrl->affPerdu();
         }
         else
         {
           if($_SESSION["billes"] == 1 && $_SESSION["coups_j"] == 0)
           {
-            $this->ctrl->affActionsJeu();
             $this->ctrl->affGagne();
           }
           else
           {
-            $this->ctrl->affActionsJeu();
+            //Ni défaite, ni victoire
+            //Erreur : Pas de bille choisie
+            if(isset($_POST["direction"]) && !isset($_POST["case"]))
+            {
+              $this->ctrl->affAlerte("bille");
+            }
+            //Erreur : Mouvement impossible
+            if($err == false)
+            {
+              $this->ctrl->affAlerte("move");
+            }
           }
         }
       }
     }
-    //TODO Messages d'erreur (Authentification, mauvais déplacements)
     //TODO Enregistrement partie
-    //TODO Affichage statistiques joueur (!!!!--> La table parties a des valeurs Booléenes, normal ?)
-    //TODO Annulation du coup précédent
+    //TODO Affichage statistiques joueur, joueurS et 3 meilleurs joueurs
+    //TODO Base : statistiques joueurs [parties gagnées / parties jouées]
   }
 }
 ?>
