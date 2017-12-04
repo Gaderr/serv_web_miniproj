@@ -60,7 +60,7 @@ class Modele
     }
 
 
-    /*try
+    try
     {
       $chaine="mysql:host=".HOST.";dbname=".BD;
       $this->connexion = new PDO($chaine,LOGIN,PASSWORD);
@@ -70,7 +70,7 @@ class Modele
     {
       $exception=new ConnexionException("problème de connexion à la base");
       throw $exception;
-    }*/
+    }
   }
 
   //Sélection de la première bille à supprimer pour commencer à jouer
@@ -102,8 +102,11 @@ class Modele
     }
     $_SESSION["chxdep"] = false;
     $_SESSION["billes"] = 33;
-    unset($_POST["case"]);
-    unset($_POST["reset_pos"]);
+    if(isset($_POST["case"]) && isset($_POST["reset_pos"]))
+    {
+      unset($_POST["case"]);
+      unset($_POST["reset_pos"]);
+    }
   }
 
   public function moveUp()
@@ -185,31 +188,35 @@ class Modele
   public function calcCoups()
   {
     $coups = 0;
-    for($ligne = 0; $ligne < 7; $ligne++)
+    for($ligne = 0; $ligne < 6; $ligne++)
     {
-      for($colonne = 0; $colonne < 7; $colonne++)
+      for($colonne = 0; $colonne < 6; $colonne++)
       {
         if($_SESSION["plateau"][$colonne][$ligne] == 'o') // on teste toutes les billes sur le plateau
         {
+          echo $ligne.$colonne." ";
           //Haut
-          if($_SESSION["plateau"][$colonne - 1][$ligne] == 'o' && $_SESSION["plateau"][$colonne - 2][$ligne] == 'u')
+          if((($colonne - 1) >= 0) && (($colonne + 1) <= 6) && (($ligne - 1) >= 0) && (($ligne + 1) <= 6))
           {
-            $coups++;
-          }
-          //Bas
-          if($_SESSION["plateau"][$colonne + 1][$ligne] == 'o' && $_SESSION["plateau"][$colonne + 2][$ligne] == 'u')
-          {
-            $coups++;
-          }
-          //Gauche
-          if($_SESSION["plateau"][$colonne][$ligne - 1] == 'o' && $_SESSION["plateau"][$colonne][$ligne - 2] == 'u')
-          {
-            $coups++;
-          }
-          //Droite
-          if($_SESSION["plateau"][$colonne][$ligne + 1] == 'o' && $_SESSION["plateau"][$colonne][$ligne + 2] == 'u')
-          {
-            $coups++;
+            if($_SESSION["plateau"][$colonne - 1][$ligne] == 'o' && $_SESSION["plateau"][$colonne - 2][$ligne] == 'u')
+            {
+              $coups++;
+            }
+            //Bas
+            if($_SESSION["plateau"][$colonne + 1][$ligne] == 'o' && $_SESSION["plateau"][$colonne + 2][$ligne] == 'u')
+            {
+              $coups++;
+            }
+            //Gauche
+            if($_SESSION["plateau"][$colonne][$ligne - 1] == 'o' && $_SESSION["plateau"][$colonne][$ligne - 2] == 'u')
+            {
+              $coups++;
+            }
+            //Droite
+            if($_SESSION["plateau"][$colonne][$ligne + 1] == 'o' && $_SESSION["plateau"][$colonne][$ligne + 2] == 'u')
+            {
+              $coups++;
+            }
           }
         }
       }

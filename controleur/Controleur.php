@@ -1,6 +1,6 @@
 <?php
-require_once PATH_VUE."/Vue.php";
-require PATH_MODELE."/Modele.php";
+require_once PATH_VUE."/vue.php";
+require PATH_MODELE."/modele.php";
 
 class Controleur
 {

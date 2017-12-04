@@ -30,6 +30,7 @@ class Routeur
       unset($_POST['case']);
     }
 
+    $logerr = false; //(déclaration en raison de la version ancienne de PHP)
     //Authentification
     if(isset($_POST['pseudo']) && isset($_POST['passw'])) //login envoyé;
     {
@@ -47,7 +48,7 @@ class Routeur
     }
 
     //vérif Authentification
-    if(!isset($_SESSION["pseudo"]))
+    if(isset($_SESSION["pseudo"]) == false)
     {
       $this->ctrl->accueil($logerr);//titres + login + verif erreur
       $_SESSION["chxdep"] = false;
@@ -58,7 +59,7 @@ class Routeur
       $def = true; //Flag pour la redirection automatique sur la vue du plateau (lors d'un jeu ou autre).
 
       //Vue des classements
-      if($_POST["menu"] == "class")
+      if(isset($_POST["menu"]) && $_POST["menu"] == "class")
       {
         $this->ctrl->askInit();
         $this->ctrl->affClassements();
@@ -66,7 +67,7 @@ class Routeur
       }
 
       //Vue des informations sur le site
-      if($_POST["menu"] == "about")
+      if(isset($_POST["menu"]) && $_POST["menu"] == "about")
       {
         $this->ctrl->askInit();
         $def = false;
@@ -74,7 +75,7 @@ class Routeur
 
       //Vue du plateau
       //Le plateau ne s'affiche que si un utilisateur s'est connecté
-      if($_POST["menu"] == "plateau" || $def)
+      if((isset($_POST["menu"]) && $_POST["menu"] == "plateau") || $def)
       {
         //Reinitialiser la partie
         if(isset($_POST["reset_post"]))
@@ -102,6 +103,8 @@ class Routeur
         }
         else
         {
+          $err = true;//(déclaration en raison de la version ancienne de PHP)
+
           //Une bille et une direction ont été choisies
           if(isset($_POST["direction"]) && isset($_POST['case']))
           {
