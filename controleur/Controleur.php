@@ -15,13 +15,25 @@ class Controleur
 
   function accueil($arg)
   {
-    $this->vue->titres();
+    $this->vue->navBar();
     $this->vue->vueLogin($arg);
+  }
+
+  function affClassements()
+  {
+    $this->vue->navBar();
+    $this->vue->vueClassements();
+  }
+
+  function affAbout()
+  {
+    $this->vue->navBar();
+    $this->vue->vueAbout();
   }
 
   function affPlateau()
   {
-    $this->vue->titres();
+    $this->vue->navBar();
     $this->vue->vuePlateau();
   }
 
@@ -85,14 +97,14 @@ class Controleur
     return $this->vue->vueGagne();
   }
 
-  function affAlerte($arg)
-  {
-    $this->vue->alerte($arg);
-  }
-
   function cancel()
   {
     $this->modele->cancel();
+  }
+
+  function affAlerte($arg)
+  {
+    $this->vue->alerte($arg);
   }
 
   function checkAuth($pseudo, $passw)

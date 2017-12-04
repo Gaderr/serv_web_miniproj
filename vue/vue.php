@@ -3,7 +3,7 @@
 //header("Content-type: text/html; charset=utf-8");
 class Vue
 {
-  function titres()
+  function navBar()
   {
     ?>
     <html>
@@ -32,38 +32,47 @@ class Vue
 
     <body>
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">Solitaire</a>
+        <span class="navbar-brand mb-0 h1">Solitaire</span>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Plateau <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">A propos</a>
-            </li>
-          </ul>
           <form class="form-inline my-2 my-lg-0" method="post" action="index.php">
-            <span style='color: white;padding-right: 20px;'>
-            <?php
-            if(isset($_SESSION["pseudo"]))
-            {
-              echo "<i class='fa fa-user-circle' aria-hidden='true' style='padding-right: 5px;'> </i> <strong>".$_SESSION["pseudo"]."</strong> </span> <input class='btn btn-danger' type='submit' name='logoff' value='Déconnexion'></input>";
-            }
-            else
-            {
-              echo "Connexion [toto | toto]</span>";
-            }
-            ?>
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <!--<a class="nav-link" href="index.php">Plateau <span class="sr-only">(current)</span></a>-->
+                <button type="submit" class="btn btn-dark" name="menu" value="plateau">Plateau</input>
+              </li>
+              <li class="nav-item">
+                <!--<a class="nav-link" href="#">A propos</a>-->
+                <button type="submit" class="btn btn-dark" name="menu" value="class">Classements</input>
+              </li>
+              <li class="nav-item">
+                <!--<a class="nav-link" href="#">A propos</a>-->
+                <button type="submit" class="btn btn-dark" name="menu" value="about">A propos</input>
+              </li>
+            </ul>
+          </form>
+          <form class="form-inline my-2 my-lg-0 ml-auto" method="post" action="index.php">
+            <span class="navbar-text" style='padding-right: 20px;'>
+              <?php
+              if(isset($_SESSION["pseudo"]))
+              {
+                echo "<i class='fa fa-user-circle' aria-hidden='true' style='padding-right: 5px;'> </i> <strong>".$_SESSION["pseudo"]."</strong> </span> <input class='btn btn-danger' type='submit' name='logoff' value='Déconnexion'></input>";
+              }
+              else
+              {
+                echo "Connexion [toto | toto]</span>";
+              }
+              ?>
           </form>
         </div>
       </nav>
       <?php
   }
 
+  //Formulaire d'Authentification
   function vueLogin($arg)
   {
     if(!$arg)
@@ -97,6 +106,118 @@ class Vue
     }
   }
 
+  //Vue des classements
+  function vueClassements()
+  {
+    ?>
+      <div class="container">
+        <h1>Casse-tête : Le Solitaire <small class="text-muted">(Peg solitaire)</small></h1>
+        <hr class="my-4">
+        <h2>Classements</h2>
+      </div>
+    </br>
+      <div class="container">
+        <div class="row">
+          <!--STATISTIQUES JOUEUR CONNECTÉ-->
+          <div class="col-lg-6 card card-body">
+            <h3>Vous</h3>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Pseudo</th>
+                  <th scope="col">Parties gagnées</th>
+                  <th scope="col">Parties jouées</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-info">
+                  <th scope="row">1</th>
+                  <td>toto</td>
+                  <td>2</td>
+                  <td>7</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>titi</td>
+                  <td>0</td>
+                  <td>7</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!--STATISTIQUES TOP 3-->
+          <div class="col-lg-6 card card-body">
+            <h3>Top 3</h3>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Pseudo</th>
+                  <th scope="col">Parties gagnées</th>
+                  <th scope="col">Parties jouées</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-info">
+                  <th scope="row">1</th>
+                  <td>toto</td>
+                  <td>2</td>
+                  <td>7</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>titi</td>
+                  <td>0</td>
+                  <td>5</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <!--STATISTIQUES TOUS JOUEURS-->
+          <div class="col-lg-12 card card-body">
+            <h3>Classement général</h3>
+            <table class="table table-striped table-sm">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Pseudo</th>
+                  <th scope="col">Parties gagnées</th>
+                  <th scope="col">Parties jouées</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-info">
+                  <th scope="row">1</th>
+                  <td>toto</td>
+                  <td>2</td>
+                  <td>7</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>titi</td>
+                  <td>0</td>
+                  <td>7</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    <?php
+  }
+
+  function vueAbout()
+  {
+    ?>
+
+
+
+    <?php
+  }
+
   function vuePlateau()
   {
     ?>
@@ -104,6 +225,7 @@ class Vue
       <h1>Casse-tête : Le Solitaire <small class="text-muted">(Peg solitaire)</small></h1>
       <p class="lead">A vous de jouer !
       <hr class="my-4">
+      <h2>Le plateau</h2>
       Les règles sont simples : Le but est de retirer toutes les billes jusqu'à ce qu'il n'en reste plus qu'une.
       Pour "manger" une bille, il faut qu'une bille puisse sauter par dessus une autre, sous réserve que la case d'arrivée soit vide !
       Sélectionnez en une pour manger celle qui se trouve à côté d'elle. Pas de diagonale possible !
@@ -128,7 +250,7 @@ class Vue
         if ($key == "o")
         {
           ?>
-          <td bgcolor="#fff">
+          <td class="border border-secondary" bgcolor="#fff">
               <label class="custom-control custom-radio">
                 <input id="radio1" name="case" type="radio" class="custom-control-input" value="<?php echo $pos ?>">
                 <span class="custom-control-indicator"></span>
@@ -142,7 +264,7 @@ class Vue
           {
             //echo '<td bgcolor="#fff"></td>';
             ?>
-            <td bgcolor="#fff">
+            <td class="border border-secondary" bgcolor="#fff">
                 <label class="custom-control custom-radio">
                   <input id="radio1" name="case" type="radio" class="custom-control-input" value="<?php echo $pos ?>" disabled>
                   <span class="custom-control-indicator"></span>
@@ -173,7 +295,7 @@ class Vue
 
   function coups()
   {
-    echo '<div class="col-lg-8"> <div class="alert alert-info">Nombre de coups jouables :<strong> '.$_SESSION["coups_j"].'</strong></div><div class="alert alert-info">Nombre de billes restantes : <strong>'.$_SESSION["billes"].'</strong></div>';
+    echo '<div class="card card-body"><div class="col-lg-8"> <div class="alert alert-info">Nombre de coups jouables :<strong> '.$_SESSION["coups_j"].'</strong></div><div class="alert alert-info">Nombre de billes restantes : <strong>'.$_SESSION["billes"].'</strong></div>';
   }
 
   function start()
@@ -181,9 +303,9 @@ class Vue
     ?>
       <div class="col-lg-8">
         <div class="card card-body">
-          Commencez par sélectionner n'importe quelle bille à retirer pour commencer à jouer
+          <p><strong>Commencez par sélectionner n'importe quelle bille à retirer pour commencer à jouer</strong></p>
+          <input type="submit" class="btn btn-primary" name="start_post" value="J'ai sélectionné ma bille de départ"/>
         </div>
-        <input type="submit" class="btn btn-primary btn-lg btn-block" name="start_post" value="J'ai sélectionné ma bille de départ"/>
       </div>
     </form>
     <?php
@@ -192,20 +314,13 @@ class Vue
   function vueFin()
   {
     ?>
-          </div>
+        </br>
+        <div class="alert alert-danger my-1" role="alert">
+          Vous avez perdu ! Dommage !
         </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="alert alert-danger" role="alert">
-            Vous avez perdu ! Dommage ! Voulez-vous recommencer ?
-          </div>
-          <form method="post" action="index.php">
-            <input type="submit" class="btn btn-success btn-lg btn-block" name="reset_post" value="Recommencer !">
-          </form>
-        </div>
+        <form method="post" action="index.php">
+          <button type="submit" class="btn btn-info btn-lg btn-block" name="menu" value="class">Voir mes scores</button>
+        </form>
       </div>
     </div>
     <?php
@@ -214,19 +329,13 @@ class Vue
   function vueGagne()
   {
     ?>
-      </div>
-    </div>
-    </br>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="alert alert-success" role="alert">
-            Bravo vous avez gagné ! Souhaitez-vous recommencer ?
-          </div>
-          <form method="post" action="index.php">
-            <input type="submit" class="btn btn-success btn-lg btn-block" name="reset_post" value="Recommencer !">
-          </form>
+        </br>
+        <div class="alert alert-success my-1" role="alert">
+          Bravo vous avez gagné !
         </div>
+        <form method="post" action="index.php">
+          <button type="submit" class="btn btn-info btn-lg btn-block" name="menu" value="class">Voir mes scores</button>
+        </form>
       </div>
     </div>
     <?php
@@ -235,6 +344,13 @@ class Vue
   function actionsJeu()
   {
     ?>
+        <div class="col-lg-8">
+          <div class="alert alert-info">
+            Nombre de coups jouables  : <strong><?php echo $_SESSION["coups_j"] ?></strong>
+          </div>
+          <div class="alert alert-info">
+            Nombre de billes restantes : <strong><?php echo $_SESSION["billes"] ?></strong>
+        </div>
         <p>Sélectionnez une bille, puis un déplacement</p>
         <div class="btn-group">
           <input type="submit" class="btn btn-primary" name="direction" value="Haut">
@@ -252,7 +368,6 @@ class Vue
           <input type="submit" class="btn btn-danger" name="reset_post" value="Remettre à zéro">
           </form>
         </div>
-
     <?php
   }
 
@@ -261,8 +376,7 @@ class Vue
     if($arg == "bille")
     {
       ?>
-        </br>
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger my-1" role="alert">
           <strong>Vous devez d'abord choisir une bille !</strong>
         </div>
       <?php
@@ -270,8 +384,7 @@ class Vue
     if($arg == "move")
     {
       ?>
-        </br>
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger my-1" role="alert">
           <strong>Déplacement impossible dans cette direction !</strong>
         </div>
       <?php
