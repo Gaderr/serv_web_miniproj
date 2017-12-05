@@ -79,35 +79,35 @@ class Vue
     {
       ?>
       <form class="form-signin" method="post" action="index.php">
-          <h2 class="form-signin-heading">Veuillez vous connecter</h2>
-          <label for="inputText" class="sr-only">Pseudo</label>
-          <input type="text" id="inputEmail" class="form-control" placeholder="Pseudo" required autofocus name="pseudo">
-          <label for="inputPassword" class="sr-only">Mot de passe</label>
-          <input type="password" id="inputPassword" class="form-control" placeholder="Mot de passe" required name="passw">
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
-        </form>
+        <h2 class="form-signin-heading">Veuillez vous connecter</h2>
+        <label for="inputText" class="sr-only">Pseudo</label>
+        <input type="text" id="inputEmail" class="form-control" placeholder="Pseudo" required autofocus name="pseudo">
+        <label for="inputPassword" class="sr-only">Mot de passe</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Mot de passe" required name="passw">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
+      </form>
       <?php
     }
     else
     {
       ?>
       <form class="form-signin" method="post" action="index.php">
-          <h2 class="form-signin-heading">Veuillez vous connecter</h2>
-          <label for="inputText" class="sr-only">Pseudo</label>
-          <input type="text" id="inputEmail" class="form-control is-invalid" placeholder="Pseudo" required autofocus name="pseudo">
-          <label for="inputPassword" class="sr-only">Mot de passe</label>
-          <input type="password" id="inputPassword" class="form-control is-invalid" placeholder="Mot de passe" required name="passw">
-          <div class="invalid-feedback">
-            Identifiant ou mot de passe incorrect(s).
-          </div>
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
-        </form>
+        <h2 class="form-signin-heading">Veuillez vous connecter</h2>
+        <label for="inputText" class="sr-only">Pseudo</label>
+        <input type="text" id="inputEmail" class="form-control is-invalid" placeholder="Pseudo" required autofocus name="pseudo">
+        <label for="inputPassword" class="sr-only">Mot de passe</label>
+        <input type="password" id="inputPassword" class="form-control is-invalid" placeholder="Mot de passe" required name="passw">
+        <div class="invalid-feedback">
+          Identifiant ou mot de passe incorrect(s).
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
+      </form>
       <?php
     }
   }
 
   //Vue des classements
-  function vueClassements()
+  function vueClassements($classj, $top3, $classg)
   {
     ?>
       <div class="container">
@@ -124,25 +124,40 @@ class Vue
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
+                  <th scope="col">id</th>
                   <th scope="col">Pseudo</th>
                   <th scope="col">Parties gagnées</th>
                   <th scope="col">Parties jouées</th>
                 </tr>
               </thead>
               <tbody>
-                <tr class="table-info">
-                  <th scope="row">1</th>
-                  <td>toto</td>
-                  <td>2</td>
-                  <td>7</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>titi</td>
-                  <td>0</td>
-                  <td>7</td>
-                </tr>
+                <?php
+                foreach($classj as $id)
+                {
+                  echo "<tr>";
+                  $i = 0;
+                  foreach($id as $val)
+                  {
+                    if($i == 0)
+                    {
+                      echo "<th scope='row'>".$val."</th>";
+                      $i++;
+                    }
+                    else
+                    {
+                      if($val == $_SESSION["pseudo"])
+                      {
+                        echo "<td class='table-info'><strong>".$val."</strong></br>";
+                      }
+                      else
+                      {
+                        echo "<td>".$val."</br>";
+                      }
+                      $i++;
+                    }
+                  }
+                }
+                ?>
               </tbody>
             </table>
           </div>
@@ -152,25 +167,40 @@ class Vue
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
+                  <th scope="col">id</th>
                   <th scope="col">Pseudo</th>
                   <th scope="col">Parties gagnées</th>
                   <th scope="col">Parties jouées</th>
                 </tr>
               </thead>
               <tbody>
-                <tr class="table-info">
-                  <th scope="row">1</th>
-                  <td>toto</td>
-                  <td>2</td>
-                  <td>7</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>titi</td>
-                  <td>0</td>
-                  <td>5</td>
-                </tr>
+                <?php
+                foreach($top3 as $id)
+                {
+                  echo "<tr>";
+                  $i = 0;
+                  foreach($id as $val)
+                  {
+                    if($i == 0)
+                    {
+                      echo "<th scope='row'>".$val."</th>";
+                      $i++;
+                    }
+                    else
+                    {
+                      if($val == $_SESSION["pseudo"])
+                      {
+                        echo "<td class='table-info'><strong>".$val."</strong></br>";
+                      }
+                      else
+                      {
+                        echo "<td>".$val."</br>";
+                      }
+                      $i++;
+                    }
+                  }
+                }
+                ?>
               </tbody>
             </table>
           </div>
@@ -190,8 +220,7 @@ class Vue
               </thead>
               <tbody>
               <?php
-              //var_dump($_SESSION["classements"]);
-              foreach($_SESSION["classements"] as $id)
+              foreach($classg as $id)
               {
                 echo "<tr>";
                 $i = 0;
@@ -366,10 +395,10 @@ class Vue
         </div>
         <p>Sélectionnez une bille, puis un déplacement</p>
         <div class="btn-group">
-          <input type="submit" class="btn btn-primary" name="direction" value="Haut">
-          <input type="submit" class="btn btn-primary" name="direction" value="Bas">
-          <input type="submit" class="btn btn-primary" name="direction" value="Gauche">
-          <input type="submit" class="btn btn-primary" name="direction" value="Droite">
+          <button type="submit" class="btn btn-primary" name="direction" value="Haut"><i class="fa fa-arrow-up fa-2x" aria-hidden="true"></i></button>
+          <button type="submit" class="btn btn-primary" name="direction" value="Bas"><i class="fa fa-arrow-down fa-2x" aria-hidden="true"></i></button>
+          <button type="submit" class="btn btn-primary" name="direction" value="Gauche"><i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i></button>
+          <button type="submit" class="btn btn-primary" name="direction" value="Droite"><i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i></button>
         </div>
         <div class="btn-group">
           <?php

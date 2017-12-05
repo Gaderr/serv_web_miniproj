@@ -7,7 +7,7 @@ class Modele
   // Constructeur
   public function __construct()
   {
-    $this->$plateau = array(); //La matrice/plateau de jeu
+    $plateau = array(); //La matrice/plateau de jeu
 
     //Initialisation du plateau
     //Chaque case est définie par un caractère :
@@ -198,31 +198,43 @@ class Modele
   public function calcCoups()
   {
     $coups = 0;
-    for($ligne = 0; $ligne < 6; $ligne++)
+    for($ligne = 0; $ligne < 7; $ligne++)
     {
-      for($colonne = 0; $colonne < 6; $colonne++)
+      for($colonne = 0; $colonne < 7; $colonne++)
       {
         if($_SESSION["plateau"][$colonne][$ligne] == 'o') // on teste toutes les billes sur le plateau
         {
-          //TODO DEBUG ERREURS VERSION ANCIENNE DE PHP
           //Haut
-          if((($colonne - 1) >= 0) && (($colonne + 1) <= 6) && (($ligne - 1) >= 0) && (($ligne + 1) <= 6))
+          if($colonne >= 2) // Nécéssaire pour PHP 5, inutile pour PHP 7
           {
             if($_SESSION["plateau"][$colonne - 1][$ligne] == 'o' && $_SESSION["plateau"][$colonne - 2][$ligne] == 'u')
             {
               $coups++;
             }
-            //Bas
+          }
+
+          //Bas
+          if($colonne <= 4)
+          {
             if($_SESSION["plateau"][$colonne + 1][$ligne] == 'o' && $_SESSION["plateau"][$colonne + 2][$ligne] == 'u')
             {
+
               $coups++;
             }
-            //Gauche
+          }
+
+          //Gauche
+          if($ligne >= 2)
+          {
             if($_SESSION["plateau"][$colonne][$ligne - 1] == 'o' && $_SESSION["plateau"][$colonne][$ligne - 2] == 'u')
             {
               $coups++;
             }
-            //Droite
+          }
+
+          //Droite
+          if($ligne <= 4)
+          {
             if($_SESSION["plateau"][$colonne][$ligne + 1] == 'o' && $_SESSION["plateau"][$colonne][$ligne + 2] == 'u')
             {
               $coups++;
@@ -253,7 +265,7 @@ class Modele
     $statement = $this->connexion->prepare("SELECT * FROM parties;");
     $statement->execute();
     $res = $statement->fetchAll(PDO::FETCH_ASSOC);
-    $_SESSION["classements"] = $res;
+    return $res;
   }
 
   //Récupérer le classement du joueur connecté
@@ -263,7 +275,16 @@ class Modele
     $statement->bindParam(1, $_SESSION["pseudo"]);
     $statement->execute();
     $res = $statement->fetchAll(PDO::FETCH_ASSOC);
-    $_SESSION["class_j"] = $res;
+    return $res;
+  }
+
+  //Récupérer les 3 joueurs ayant le plus de parties gagnées
+  public function getTop3()
+  {
+    $statement = $this->connexion->prepare("SELECT id, pseudo, partieGagnee, partieJouee FROM parties ORDER BY partieGagnee DESC LIMIT 3");
+    $statement->execute();
+    $res = $statement->fetchAll(PDO::FETCH_ASSOC);
+    return $res;
   }
 
   //Enregistrer une partie gagnée (et une partie jouée)

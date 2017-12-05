@@ -62,11 +62,7 @@ class Routeur
       if(isset($_POST["menu"]) && $_POST["menu"] == "class")
       {
         $this->ctrl->askInit();
-        $this->ctrl->getClassements();
         $this->ctrl->affClassements();
-        /*$this->ctrl->bidon();
-        var_dump($_SESSION["temp"]);
-        echo $_SESSION["temp"]['partieGagnee'];*/
         $def = false;
       }
 
@@ -93,21 +89,20 @@ class Routeur
           //Bille choisie
           if(isset($_POST["case"]))
           {
-            $this->ctrl->askStartPlateau();
-            $this->ctrl->affPlateau();
-            $this->ctrl->checkCoups();
-            $this->ctrl->affActionsJeu();
+            $this->ctrl->askStartPlateau(); //Commencer le tableau
+            $this->ctrl->affPlateau(); //Afficher le plateau
+            $this->ctrl->checkCoups(); //Calculer les coups possibles
+            $this->ctrl->affActionsJeu(); //Afficher les actions de jeu
           }
           else
           {
             $this->ctrl->affPlateau();
-            $this->ctrl->affStartPlateau();
+            $this->ctrl->affStartPlateau(); //Affichier la vue de début de partie
           }
         }
         else
         {
           $err = true;//(déclaration en raison de la version ancienne de PHP)
-
           //Une bille et une direction ont été choisies
           if(isset($_POST["direction"]) && isset($_POST['case']))
           {
@@ -127,8 +122,8 @@ class Routeur
                 break;
             }
           }
-          $this->ctrl->affPlateau();
           $this->ctrl->checkCoups();
+          $this->ctrl->affPlateau();
           $this->ctrl->affActionsJeu();
 
           //Test victoire ou défaite
@@ -163,9 +158,6 @@ class Routeur
         }
       }
     }
-    //TODO Enregistrement parties gagnées
-    //TODO Affichage statistiques joueur, joueurS et 3 meilleurs joueurs
-    //TODO Base : statistiques joueurs [parties gagnées / parties jouées]
   }
 }
 ?>

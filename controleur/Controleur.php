@@ -22,7 +22,7 @@ class Controleur
   function affClassements()
   {
     $this->vue->navBar();
-    $this->vue->vueClassements();
+    $this->vue->vueClassements($this->modele->getClassementJoueur(), $this->modele->getTop3(), $this->modele->getClassements());
   }
 
   function affAbout()
@@ -113,11 +113,6 @@ class Controleur
   function affAlerte($arg)
   {
     $this->vue->alerte($arg);
-  }
-
-  function getClassements()
-  {
-    $this->modele->getClassements();
   }
 
   function checkAuth($pseudo, $passw)
