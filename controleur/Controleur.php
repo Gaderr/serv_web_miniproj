@@ -89,13 +89,12 @@ class Controleur
 
   function affPerdu()
   {
-    $this->modele->addPartieJouee();
+    $this->modele->addPartiePerdue();
     return $this->vue->vueFin();
   }
 
   function affGagne()
   {
-    //$this->modele->addPartieJouee();
     $this->modele->adVictoriam();
     return $this->vue->vueGagne();
   }

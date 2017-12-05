@@ -18,6 +18,9 @@ echo "gabriel : ".$val."<br/>";
 
 $val=crypt('elias');
 echo "elias : ".$val."<br/>";
+
+$val=crypt('melanie');
+echo "melanie : ".$val."<br/>";
 // il faut que la fonction crypt() connaisse la méthode de cryptage et le "sel" à utiliser.
 //Il faut que ce soit les mêmes que ce qui a été utilisé lors du cryptage.
 // ces 2 informations sont stockées au début de la chaîne de caractères résultant du cryptage

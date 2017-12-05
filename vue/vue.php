@@ -119,15 +119,14 @@ class Vue
       <div class="container">
         <div class="row">
           <!--STATISTIQUES JOUEUR CONNECTÉ-->
-          <div class="col-lg-6 card card-body">
+          <div class="col-lg-6 card card-body text-white bg-info mb-1">
             <h3>Vous</h3>
-            <table class="table table-striped">
+            <table class="table table-striped text-white">
               <thead>
                 <tr>
-                  <th scope="col">id</th>
-                  <th scope="col">Pseudo</th>
                   <th scope="col">Parties gagnées</th>
-                  <th scope="col">Parties jouées</th>
+                  <th scope="col">Parties perdues</th>
+                  <th scope="col">Ratio Vict/Def</th>
                 </tr>
               </thead>
               <tbody>
@@ -138,16 +137,15 @@ class Vue
                   $i = 0;
                   foreach($id as $val)
                   {
-                    if($i == 0)
+                    if($i < 2)
                     {
-                      echo "<th scope='row'>".$val."</th>";
                       $i++;
                     }
                     else
                     {
                       if($val == $_SESSION["pseudo"])
                       {
-                        echo "<td class='table-info'><strong>".$val."</strong></br>";
+                        echo "<td class='table-dark'><strong>".$val."</strong></br>";
                       }
                       else
                       {
@@ -162,35 +160,37 @@ class Vue
             </table>
           </div>
           <!--STATISTIQUES TOP 3-->
-          <div class="col-lg-6 card card-body">
+          <div class="col-lg-6 card card-body text-white bg-success mb-1">
             <h3>Top 3</h3>
-            <table class="table table-striped">
+            <table class="table table-striped text-white">
               <thead>
                 <tr>
-                  <th scope="col">id</th>
+                  <th scope="col">#</th>
                   <th scope="col">Pseudo</th>
                   <th scope="col">Parties gagnées</th>
-                  <th scope="col">Parties jouées</th>
+                  <th scope="col">Parties perdues</th>
+                  <th scope="col">Ratio Vict/Def</th>
                 </tr>
               </thead>
               <tbody>
                 <?php
+                $y = 0;
                 foreach($top3 as $id)
                 {
                   echo "<tr>";
-                  $i = 0;
+                  $i = true;
                   foreach($id as $val)
                   {
-                    if($i == 0)
+                    if($i)
                     {
-                      echo "<th scope='row'>".$val."</th>";
-                      $i++;
+                      echo "<th scope='row'>".++$y."</th>";
+                      $i = false;
                     }
                     else
                     {
                       if($val == $_SESSION["pseudo"])
                       {
-                        echo "<td class='table-info'><strong>".$val."</strong></br>";
+                        echo "<td class='table-dark'><strong>".$val."</strong></br>";
                       }
                       else
                       {
@@ -207,35 +207,37 @@ class Vue
         </div>
         <div class="row">
           <!--STATISTIQUES TOUS JOUEURS-->
-          <div class="col-lg-12 card card-body">
+          <div class="col-lg-12 card card-body text-white bg-secondary mb-1">
             <h3>Classement général</h3>
-            <table class="table table-striped table-sm">
+            <table class="table table-striped table-sm  text-white">
               <thead>
                 <tr>
-                  <th scope="col">id</th>
+                  <th scope="col">#</th>
                   <th scope="col">Pseudo</th>
                   <th scope="col">Parties gagnées</th>
-                  <th scope="col">Parties jouées</th>
+                  <th scope="col">Parties perdues</th>
+                  <th scope="col">Ratio Vict/Def</th>
                 </tr>
               </thead>
               <tbody>
               <?php
+              $y = 0;
               foreach($classg as $id)
               {
                 echo "<tr>";
-                $i = 0;
+                $i = true;
                 foreach($id as $val)
                 {
-                  if($i == 0)
+                  if($i)
                   {
-                    echo "<th scope='row'>".$val."</th>";
-                    $i++;
+                    echo "<th scope='row'>".++$y."</th>";
+                    $i = false;
                   }
                   else
                   {
                     if($val == $_SESSION["pseudo"])
                     {
-                      echo "<td class='table-info'><strong>".$val."</strong></br>";
+                      echo "<td class='table-dark'><strong>".$val."</strong></br>";
                     }
                     else
                     {

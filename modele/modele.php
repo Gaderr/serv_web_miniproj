@@ -262,7 +262,7 @@ class Modele
   //Récupérer le classement général
   public function getClassements()
   {
-    $statement = $this->connexion->prepare("SELECT * FROM parties;");
+    $statement = $this->connexion->prepare("SELECT * FROM ratios ORDER BY ratio DESC;");
     $statement->execute();
     $res = $statement->fetchAll(PDO::FETCH_ASSOC);
     return $res;
@@ -271,7 +271,7 @@ class Modele
   //Récupérer le classement du joueur connecté
   public function getClassementJoueur()
   {
-    $statement = $this->connexion->prepare("SELECT * FROM parties WHERE pseudo=?;");
+    $statement = $this->connexion->prepare("SELECT * FROM ratios WHERE pseudo=?;");
     $statement->bindParam(1, $_SESSION["pseudo"]);
     $statement->execute();
     $res = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -281,7 +281,7 @@ class Modele
   //Récupérer les 3 joueurs ayant le plus de parties gagnées
   public function getTop3()
   {
-    $statement = $this->connexion->prepare("SELECT id, pseudo, partieGagnee, partieJouee FROM parties ORDER BY partieGagnee DESC LIMIT 3");
+    $statement = $this->connexion->prepare("SELECT id, pseudo, partieGagnee, partiePerdue, ratio FROM ratios ORDER BY ratio DESC LIMIT 3");
     $statement->execute();
     $res = $statement->fetchAll(PDO::FETCH_ASSOC);
     return $res;
@@ -290,18 +290,32 @@ class Modele
   //Enregistrer une partie gagnée (et une partie jouée)
   public function adVictoriam()
   {
-    $this->addPartieJouee();
-    $statement = $this->connexion->prepare("UPDATE parties SET partieGagnee = partieGagnee + 1 WHERE pseudo=?");
+    $statement = $this->connexion->prepare("SELECT partieGagnee FROM parties WHERE pseudo=?");
+    $statement2 = $this->connexion->prepare("INSERT INTO parties (id, pseudo, partieGagnee, partiePerdue) VALUES (NULL, ?, 1, 0)");//INSERTION
+    $statement3 = $this->connexion->prepare("UPDATE parties SET partieGagnee = partieGagnee + 1 WHERE pseudo=?");//INCREMENTATION
     $statement->bindParam(1, $_SESSION["pseudo"]);
+    $statement2->bindParam(1, $_SESSION["pseudo"]);
+    $statement3->bindParam(1, $_SESSION["pseudo"]);
+
     $statement->execute();
+    $res = $statement->fetch(PDO::FETCH_ASSOC);
+
+    if(!$res)//True si un enregistrement existe déjà
+    {
+      $statement2->execute();//Insertion
+    }
+    else
+    {
+      $statement3->execute();//Incrémentation
+    }
   }
 
   //Enregistrer une partie jouée
-  public function addPartieJouee()
+  public function addPartiePerdue()
   {
-    $statement = $this->connexion->prepare("SELECT partieJouee FROM parties WHERE pseudo=?");
-    $statement2 = $this->connexion->prepare("INSERT INTO parties (id, pseudo, partieGagnee, partieJouee) VALUES (NULL, ?, 0, 1)");
-    $statement3 = $this->connexion->prepare("UPDATE parties SET partieJouee = partieJouee + 1 WHERE pseudo=?");
+    $statement = $this->connexion->prepare("SELECT partiePerdue FROM parties WHERE pseudo=?");
+    $statement2 = $this->connexion->prepare("INSERT INTO parties (id, pseudo, partieGagnee, partiePerdue) VALUES (NULL, ?, 0, 1)");
+    $statement3 = $this->connexion->prepare("UPDATE parties SET partiePerdue = partiePerdue + 1 WHERE pseudo=?");
     $statement->bindParam(1, $_SESSION["pseudo"]);
     $statement2->bindParam(1, $_SESSION["pseudo"]);
     $statement3->bindParam(1, $_SESSION["pseudo"]);
