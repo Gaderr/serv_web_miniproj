@@ -89,12 +89,20 @@ class Controleur
 
   function affPerdu()
   {
+    $this->modele->addPartieJouee();
     return $this->vue->vueFin();
   }
 
   function affGagne()
   {
+    //$this->modele->addPartieJouee();
+    $this->modele->adVictoriam();
     return $this->vue->vueGagne();
+  }
+
+  function bidon()
+  {
+    $this->modele->addPartieJouee();
   }
 
   function cancel()
@@ -105,6 +113,11 @@ class Controleur
   function affAlerte($arg)
   {
     $this->vue->alerte($arg);
+  }
+
+  function getClassements()
+  {
+    $this->modele->getClassements();
   }
 
   function checkAuth($pseudo, $passw)

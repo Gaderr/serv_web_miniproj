@@ -182,26 +182,41 @@ class Vue
             <table class="table table-striped table-sm">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
+                  <th scope="col">id</th>
                   <th scope="col">Pseudo</th>
                   <th scope="col">Parties gagnées</th>
                   <th scope="col">Parties jouées</th>
                 </tr>
               </thead>
               <tbody>
-                <tr class="table-info">
-                  <th scope="row">1</th>
-                  <td>toto</td>
-                  <td>2</td>
-                  <td>7</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>titi</td>
-                  <td>0</td>
-                  <td>7</td>
-                </tr>
-              </tbody>
+              <?php
+              //var_dump($_SESSION["classements"]);
+              foreach($_SESSION["classements"] as $id)
+              {
+                echo "<tr>";
+                $i = 0;
+                foreach($id as $val)
+                {
+                  if($i == 0)
+                  {
+                    echo "<th scope='row'>".$val."</th>";
+                    $i++;
+                  }
+                  else
+                  {
+                    if($val == $_SESSION["pseudo"])
+                    {
+                      echo "<td class='table-info'><strong>".$val."</strong></br>";
+                    }
+                    else
+                    {
+                      echo "<td>".$val."</br>";
+                    }
+                    $i++;
+                  }
+                }
+              }
+              ?>
             </table>
           </div>
         </div>
@@ -212,8 +227,6 @@ class Vue
   function vueAbout()
   {
     ?>
-
-
 
     <?php
   }

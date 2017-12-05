@@ -15,7 +15,12 @@ define("PATH_BOOTSTRAP", HOME_SITE."/bootstrap");
 
 // données pour la connexion au sgbd
 define("HOST","localhost");
-define("BD","E164968N");
+/*define("BD","E164968N");
 define("LOGIN","E164968N");
-define("PASSWORD","E164968N");
+define("PASSWORD","E164968N");*/
+
+//Serveur Gabriel
+define("BD","gabrield_solitaire");
+define("LOGIN","gabrield_me");
+define("PASSWORD","solitaire33");
 ?>

@@ -1,5 +1,4 @@
 <?php
-
 class Modele
 {
   private $connexion;
@@ -8,7 +7,7 @@ class Modele
   // Constructeur
   public function __construct()
   {
-    $plateau = array(); //La matrice/plateau de jeu
+    $this->$plateau = array(); //La matrice/plateau de jeu
 
     //Initialisation du plateau
     //Chaque case est définie par un caractère :
@@ -52,13 +51,13 @@ class Modele
     //  | X X o o o X X
     //  v
     //  axe Y
+    // [[X, X, o, o, o, X, X], [X, X, o, o, o, X, X], ...]
 
     if(!isset($_SESSION["plateau"]) && !isset($_SESSION["billes"]))
     {
       $_SESSION["plateau"] = $plateau;
       $_SESSION["billes"] = 33;
     }
-
 
     try
     {
@@ -68,10 +67,16 @@ class Modele
     }
     catch(PDOException $e)
     {
-      $exception=new ConnexionException("problème de connexion à la base");
-      throw $exception;
+      /*$exception = new ConnexionException($e->getMessage());
+      throw $exception->getMessage();*/
+      echo $e->getMessage();
     }
   }
+
+
+  /*******************************
+  ************PLATEAU*************
+  ********************************/
 
   //Sélection de la première bille à supprimer pour commencer à jouer
   public function startGame()
@@ -109,6 +114,7 @@ class Modele
     }
   }
 
+  //Action de jeu vers le haut
   public function moveUp()
   {
     $posx = (int) $_POST["case"][0];
@@ -128,6 +134,7 @@ class Modele
     }
   }
 
+  //Action de jeu vers le bas
   public function moveDown()
   {
     $posx = (int) $_POST["case"][0];
@@ -147,6 +154,7 @@ class Modele
     }
   }
 
+  //Action de jeu vers la gauche
   public function moveLeft()
   {
     $posx = (int) $_POST["case"][0];
@@ -166,6 +174,7 @@ class Modele
     }
   }
 
+  //Action de jeu vers la droite
   public function moveRight()
   {
     $posx = (int) $_POST["case"][0];
@@ -185,6 +194,7 @@ class Modele
     }
   }
 
+  //Calculer le nombre de coups possible sur le plateau de la session
   public function calcCoups()
   {
     $coups = 0;
@@ -194,7 +204,7 @@ class Modele
       {
         if($_SESSION["plateau"][$colonne][$ligne] == 'o') // on teste toutes les billes sur le plateau
         {
-          echo $ligne.$colonne." ";
+          //TODO DEBUG ERREURS VERSION ANCIENNE DE PHP
           //Haut
           if((($colonne - 1) >= 0) && (($colonne + 1) <= 6) && (($ligne - 1) >= 0) && (($ligne + 1) <= 6))
           {
@@ -224,6 +234,7 @@ class Modele
     $_SESSION["coups_j"] = $coups;
   }
 
+  //Annuler le coup précédent
   public function cancel()
   {
     $_SESSION["plateau"] = $_SESSION["plateau_pre"];
@@ -231,9 +242,65 @@ class Modele
     unset($_SESSION["plateau_pre"]);
   }
 
+
+  /*******************************
+  *********BASE DE DONNEES********
+  ********************************/
+
+  //Récupérer le classement général
+  public function getClassements()
+  {
+    $statement = $this->connexion->prepare("SELECT * FROM parties;");
+    $statement->execute();
+    $res = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $_SESSION["classements"] = $res;
+  }
+
+  //Récupérer le classement du joueur connecté
+  public function getClassementJoueur()
+  {
+    $statement = $this->connexion->prepare("SELECT * FROM parties WHERE pseudo=?;");
+    $statement->bindParam(1, $_SESSION["pseudo"]);
+    $statement->execute();
+    $res = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $_SESSION["class_j"] = $res;
+  }
+
+  //Enregistrer une partie gagnée (et une partie jouée)
+  public function adVictoriam()
+  {
+    $this->addPartieJouee();
+    $statement = $this->connexion->prepare("UPDATE parties SET partieGagnee = partieGagnee + 1 WHERE pseudo=?");
+    $statement->bindParam(1, $_SESSION["pseudo"]);
+    $statement->execute();
+  }
+
+  //Enregistrer une partie jouée
+  public function addPartieJouee()
+  {
+    $statement = $this->connexion->prepare("SELECT partieJouee FROM parties WHERE pseudo=?");
+    $statement2 = $this->connexion->prepare("INSERT INTO parties (id, pseudo, partieGagnee, partieJouee) VALUES (NULL, ?, 0, 1)");
+    $statement3 = $this->connexion->prepare("UPDATE parties SET partieJouee = partieJouee + 1 WHERE pseudo=?");
+    $statement->bindParam(1, $_SESSION["pseudo"]);
+    $statement2->bindParam(1, $_SESSION["pseudo"]);
+    $statement3->bindParam(1, $_SESSION["pseudo"]);
+
+    $statement->execute();
+    $res = $statement->fetch(PDO::FETCH_ASSOC);
+
+    if(!$res)//True si un enregistrement existe déjà
+    {
+      $statement2->execute();//Insertion
+    }
+    else
+    {
+      $statement3->execute();//Incrémentation
+    }
+  }
+
+  //Déconnexion de la base
   public function deconnexion()
   {
-    //Déconnexion de la base
     $this->connexion=null;
     unset($_POST);
     unset($_SESSION['pseudo']);
@@ -241,12 +308,11 @@ class Modele
 
   public function checkAuth($pseudo, $pass)
   {
-    /*$statement = $this->connexion->prepare("SELECT motDePasse FROM joueurs where pseudo=?;");
+    $statement = $this->connexion->prepare("SELECT motDePasse FROM joueurs where pseudo=?;");
     $statement->bindParam(1, $pseudo);
     $statement->execute();
     $result=$statement->fetch(PDO::FETCH_ASSOC);
-    if(crypt($pass, $result['motDePasse']) == $result['motDePasse'])*/
-    if($pseudo == "toto" && $pass == "toto")//tests locaux
+    if(crypt($pass, $result['motDePasse']) == $result['motDePasse'])
     {
       return true;
     }

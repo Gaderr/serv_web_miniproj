@@ -62,7 +62,11 @@ class Routeur
       if(isset($_POST["menu"]) && $_POST["menu"] == "class")
       {
         $this->ctrl->askInit();
+        $this->ctrl->getClassements();
         $this->ctrl->affClassements();
+        /*$this->ctrl->bidon();
+        var_dump($_SESSION["temp"]);
+        echo $_SESSION["temp"]['partieGagnee'];*/
         $def = false;
       }
 
@@ -92,7 +96,6 @@ class Routeur
             $this->ctrl->askStartPlateau();
             $this->ctrl->affPlateau();
             $this->ctrl->checkCoups();
-            //$this->ctrl->affCoups();
             $this->ctrl->affActionsJeu();
           }
           else
@@ -126,8 +129,8 @@ class Routeur
           }
           $this->ctrl->affPlateau();
           $this->ctrl->checkCoups();
-          //$this->ctrl->affCoups();
           $this->ctrl->affActionsJeu();
+
           //Test victoire ou défaite
           if($_SESSION["billes"] > 1 && $_SESSION["coups_j"] == 0)
           {

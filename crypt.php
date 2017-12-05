@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 
 $toto=crypt('toto');
@@ -7,7 +7,18 @@ echo $toto."<br/>";
 $titi=crypt('titi');
 echo $titi."<br/>";
 
-// il faut que la fonction crypt() connaisse la méthode de cryptage et le "sel" à utiliser. 
+$val=crypt('machin');
+echo "machin : ".$val."<br/>";
+
+$val=crypt('Jean-François');
+echo "Jean-François : ".$val."<br/>";
+
+$val=crypt('Gabriel');
+echo "Gabriel : ".$val."<br/>";
+
+$val=crypt('Elias');
+echo "Gabriel : ".$val."Elias : <br/>";
+// il faut que la fonction crypt() connaisse la méthode de cryptage et le "sel" à utiliser.
 //Il faut que ce soit les mêmes que ce qui a été utilisé lors du cryptage.
 // ces 2 informations sont stockées au début de la chaîne de caractères résultant du cryptage
 //C'est pour cette raison que l'on passe $toto comme 2ème paramètre.
