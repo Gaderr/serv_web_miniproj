@@ -13,8 +13,6 @@ class Routeur
   // Traite une requête entrante
   public function routerRequete()
   {
-    //print_r($_SESSION);
-
     //Déconnexion de l'utilisateur
     if(isset($_POST['logoff']))
     {
@@ -65,14 +63,7 @@ class Routeur
         $this->ctrl->affClassements();
         $def = false;
       }
-
-      //Vue des informations sur le site
-      if(isset($_POST["menu"]) && $_POST["menu"] == "about")
-      {
-        $this->ctrl->askInit();
-        $def = false;
-      }
-
+      
       //Vue du plateau
       //Le plateau ne s'affiche que si un utilisateur s'est connecté
       if((isset($_POST["menu"]) && $_POST["menu"] == "plateau") || $def)

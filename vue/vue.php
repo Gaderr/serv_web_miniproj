@@ -11,12 +11,15 @@ class Vue
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="description" content="Jeu : Solitaire">
-      <meta name="author" content="Gabriel Derrien / Elias Fahmi">
+      <meta name="author" content="Gabriel Derrien / Ilyas Fahmi">
 
+      <!--CSS BOOTSTRAP-->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
+      <!--CSS LOCAL-->
       <link rel="stylesheet" href="./css/main.css">
 
+      <!--JAVASCRIPT-->
       <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
@@ -47,10 +50,6 @@ class Vue
               <li class="nav-item">
                 <!--<a class="nav-link" href="#">A propos</a>-->
                 <button type="submit" class="btn btn-dark" name="menu" value="class">Classements</input>
-              </li>
-              <li class="nav-item">
-                <!--<a class="nav-link" href="#">A propos</a>-->
-                <button type="submit" class="btn btn-dark" name="menu" value="about">A propos</input>
               </li>
             </ul>
           </form>
@@ -295,10 +294,10 @@ class Vue
         {
           ?>
           <td class="border border-secondary" bgcolor="#fff">
-              <label class="custom-control custom-radio">
-                <input id="radio1" name="case" type="radio" class="custom-control-input" value="<?php echo $pos ?>">
-                <span class="custom-control-indicator"></span>
-              </label>
+            <label class="custom-control custom-radio">
+              <input id="radio1" name="case" type="radio" class="custom-control-input" value="<?php echo $pos ?>">
+              <span class="custom-control-indicator"></span>
+            </label>
           </td>
           <?php
         }
@@ -309,10 +308,10 @@ class Vue
             //echo '<td bgcolor="#fff"></td>';
             ?>
             <td class="border border-secondary" bgcolor="#fff">
-                <label class="custom-control custom-radio">
-                  <input id="radio1" name="case" type="radio" class="custom-control-input" value="<?php echo $pos ?>" disabled>
-                  <span class="custom-control-indicator"></span>
-                </label>
+              <label class="custom-control custom-radio">
+                <input id="radio1" name="case" type="radio" class="custom-control-input" value="<?php echo $pos ?>" disabled>
+                <span class="custom-control-indicator"></span>
+              </label>
             </td>
             <?php
           }
@@ -339,7 +338,16 @@ class Vue
 
   function coups()
   {
-    echo '<div class="card card-body"><div class="col-lg-8"> <div class="alert alert-info">Nombre de coups jouables :<strong> '.$_SESSION["coups_j"].'</strong></div><div class="alert alert-info">Nombre de billes restantes : <strong>'.$_SESSION["billes"].'</strong></div>';
+    ?>
+    <div class="card card-body">
+      <div class="col-lg-8">
+        <div class="alert alert-info">
+          Nombre de coups jouables :<strong> '.$_SESSION["coups_j"].'</strong>
+        </div>
+        <div class="alert alert-info">
+          Nombre de billes restantes : <strong>'.$_SESSION["billes"].'</strong>
+        </div>
+    <?php
   }
 
   function start()
@@ -388,30 +396,30 @@ class Vue
   function actionsJeu()
   {
     ?>
-        <div class="col-lg-8">
-          <div class="alert alert-info">
-            Nombre de coups jouables  : <strong><?php echo $_SESSION["coups_j"] ?></strong>
-          </div>
-          <div class="alert alert-info">
-            Nombre de billes restantes : <strong><?php echo $_SESSION["billes"] ?></strong>
+      <div class="col-lg-8">
+        <div class="alert alert-info">
+          Nombre de coups jouables  : <strong><?php echo $_SESSION["coups_j"] ?></strong>
         </div>
-        <p>Sélectionnez une bille, puis un déplacement</p>
-        <div class="btn-group">
-          <button type="submit" class="btn btn-primary" name="direction" value="Haut"><i class="fa fa-arrow-up fa-2x" aria-hidden="true"></i></button>
-          <button type="submit" class="btn btn-primary" name="direction" value="Bas"><i class="fa fa-arrow-down fa-2x" aria-hidden="true"></i></button>
-          <button type="submit" class="btn btn-primary" name="direction" value="Gauche"><i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i></button>
-          <button type="submit" class="btn btn-primary" name="direction" value="Droite"><i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i></button>
-        </div>
-        <div class="btn-group">
-          <?php
-          if(isset($_SESSION["plateau_pre"]))
-          {
-            echo '<input type="submit" class="btn btn-warning" name="cancel" value="Annuler le coup précédent">';
-          }
-          ?>
-          <input type="submit" class="btn btn-danger" name="reset_post" value="Remettre à zéro">
-          </form>
-        </div>
+        <div class="alert alert-info">
+          Nombre de billes restantes : <strong><?php echo $_SESSION["billes"] ?></strong>
+      </div>
+      <p>Sélectionnez une bille, puis un déplacement</p>
+      <div class="btn-group">
+        <button type="submit" class="btn btn-primary" name="direction" value="Haut"><i class="fa fa-arrow-up fa-2x" aria-hidden="true"></i></button>
+        <button type="submit" class="btn btn-primary" name="direction" value="Bas"><i class="fa fa-arrow-down fa-2x" aria-hidden="true"></i></button>
+        <button type="submit" class="btn btn-primary" name="direction" value="Gauche"><i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i></button>
+        <button type="submit" class="btn btn-primary" name="direction" value="Droite"><i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i></button>
+      </div>
+      <div class="btn-group">
+        <?php
+        if(isset($_SESSION["plateau_pre"]))
+        {
+          echo '<input type="submit" class="btn btn-warning" name="cancel" value="Annuler le coup précédent">';
+        }
+        ?>
+        <input type="submit" class="btn btn-danger" name="reset_post" value="Remettre à zéro">
+        </form>
+      </div>
     <?php
   }
 

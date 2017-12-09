@@ -91,6 +91,9 @@ DROP TABLE IF EXISTS `ratios`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`gabrield`@`localhost` SQL SECURITY DEFINER VIEW `ratios`  AS  select `parties`.`id` AS `id`,`parties`.`pseudo` AS `pseudo`,`parties`.`partieGagnee` AS `partieGagnee`,`parties`.`partiePerdue` AS `partiePerdue`,(`parties`.`partieGagnee` / `parties`.`partiePerdue`) AS `ratio` from `parties` ;
 
+--- Si la requête ne fonctionne pas, utiliser celle-ci :
+--- CREATE VIEW `ratios`  AS  select `parties`.`id` AS `id`,`parties`.`pseudo` AS `pseudo`,`parties`.`partieGagnee` AS `partieGagnee`,`parties`.`partiePerdue` AS `partiePerdue`,(`parties`.`partieGagnee` / `parties`.`partiePerdue`) AS `ratio` from `parties` ;
+
 --
 -- Index pour les tables déchargées
 --

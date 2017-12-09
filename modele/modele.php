@@ -76,7 +76,7 @@ class Modele
 
   /*******************************
   ************PLATEAU*************
-  ********************************/
+  *******************************/
 
   //Sélection de la première bille à supprimer pour commencer à jouer
   public function startGame()
@@ -257,7 +257,7 @@ class Modele
 
   /*******************************
   *********BASE DE DONNEES********
-  ********************************/
+  *******************************/
 
   //Récupérer le classement général
   public function getClassements()

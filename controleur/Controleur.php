@@ -25,12 +25,6 @@ class Controleur
     $this->vue->vueClassements($this->modele->getClassementJoueur(), $this->modele->getTop3(), $this->modele->getClassements());
   }
 
-  function affAbout()
-  {
-    $this->vue->navBar();
-    $this->vue->vueAbout();
-  }
-
   function affPlateau()
   {
     $this->vue->navBar();
